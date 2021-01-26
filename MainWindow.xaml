@@ -5,8 +5,58 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DumaVoteCounter"
         mc:Ignorable="d"
-        Title="Голосование" Height="400" Width="200" WindowStyle="None" MouseLeftButtonDown="Dragging" Loaded="Window_Loaded" Closing="Window_Closing" Background="DarkGray">
-    <Grid >
-
+        Title="Голосование" Height="250" WindowStyle="None" MouseLeftButtonDown="Dragging" Closing="Window_Closing">
+    <Window.Resources>
+        <Style TargetType="TextBox">
+            <Setter Property="Margin" Value="2 2"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="Label">
+            <Setter Property="Margin" Value="2 2"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="MinHeight" Value="30" />
+            <Setter Property="VerticalContentAlignment" Value="Center"/>
+        </Style>
+        <Style TargetType="Button">
+            <Setter Property="Margin" Value="2" />
+            <Setter Property="MinWidth" Value="90" />
+            <Setter Property="MinHeight" Value="30" />
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+    </Window.Resources>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition MinHeight="25"/>
+                <RowDefinition MinHeight="25"/>
+                <RowDefinition MinHeight="25"/>
+                <RowDefinition MinHeight="25"/>
+                <RowDefinition />
+                <RowDefinition />
+        </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition />
+            </Grid.ColumnDefinitions>
+            <TextBox x:Name="peopleNumberTextBox" Grid.Row="0" Grid.Column="1" Text="49" PreviewTextInput="InputOnlyDigits"/>
+            <TextBox x:Name="voteForTextBox" Grid.Row="1" Grid.Column="1" IsEnabled="False"  Text="{Binding ElementName=peopleNumberTextBox, Path=Text}"/>
+            <TextBox x:Name="voteAgainstTextBox" Grid.Row="2" Grid.Column="1" Text="0" PreviewTextInput="InputOnlyDigits" />
+            <TextBox x:Name="voteAbstainedTextBox" Grid.Row="3" Grid.Column="1" Text="0" PreviewTextInput="InputOnlyDigits"/>
+            <Label Content="Присутствует депутатов" Height="30" />
+            <Label Grid.Row="1" Content="ЗА" Background="Green" />
+            <Label Grid.Row="2" Content="ПРОТИВ" Background="Red" />
+            <Label Grid.Row="3" Content="ВОЗДЕРЖАЛИСЬ" Background="Yellow" />
+        <Grid Grid.Row="4" Grid.ColumnSpan="2" >
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0">
+                <TextBlock Padding="2" TextAlignment="Center"> Отправить<LineBreak/>результаты</TextBlock>
+            </Button>
+            <Button Grid.Column="1" Content="Сброс"/>
+        </Grid>
+        <Button Grid.Row="5" Grid.ColumnSpan="2" Content="ЕДИНОГЛАСНО"/>
     </Grid>
 </Window>

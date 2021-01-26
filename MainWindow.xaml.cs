@@ -24,15 +24,14 @@ namespace DumaVoteCounter {
             Top = Properties.Settings.Default.positionY;
             Width = Properties.Settings.Default.windowWidth;
             Height = Properties.Settings.Default.windowHeight;
+            voteAgainstTextBox.TextChanged += voteTextChange;
+            voteAbstainedTextBox.TextChanged += voteTextChange;
         }
 
         private void Dragging(object sender, MouseButtonEventArgs e) {
             this.DragMove();
         }
 
-        private void Window_Loaded(object sender, RoutedEventArgs e) {
-
-        }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             Properties.Settings.Default.positionX = Left;
@@ -41,5 +40,33 @@ namespace DumaVoteCounter {
             Properties.Settings.Default.windowHeight = Height;
             Properties.Settings.Default.Save();
         }
+
+        private void Exit_Click(object sender, RoutedEventArgs e) {
+            var response = MessageBox.Show("Выйти из программы?", "Выход...", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+            if (response == MessageBoxResult.No) return;
+            else Application.Current.Shutdown();
+        }
+
+        private void NewVote_Click(object sender, RoutedEventArgs e) {
+            voteForTextBox.Text = peopleNumberTextBox.Text;
+            voteAgainstTextBox.Text = "0";
+            voteAbstainedTextBox.Text = "0";
+        }
+
+        private void InputOnlyDigits(object sender, TextCompositionEventArgs e) {
+            if (!Char.IsDigit(e.Text, 0)) e.Handled = true;
+
+        }
+
+        private void voteTextChange(object sender, TextChangedEventArgs e) {
+            int voteAbstained = 0; int voteAgainst = 0; int peopleNumber = 0;
+            bool havePeopleNumber = Int32.TryParse(peopleNumberTextBox.Text, out peopleNumber);
+            bool haveVoteAgainst = Int32.TryParse(voteAgainstTextBox.Text, out voteAgainst);
+            bool haveVoteAbstained = Int32.TryParse(voteAbstainedTextBox.Text, out voteAbstained);
+            //MessageBox.Show(voteAbstained.ToString());
+            voteForTextBox.Text = (peopleNumber - voteAgainst - voteAbstained).ToString();
+        }
+
+
     }
 }
