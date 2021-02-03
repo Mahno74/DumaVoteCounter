@@ -70,5 +70,53 @@ namespace DumaVoteCounter.Properties {
                 this["windowWidth"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double resultPositionX {
+            get {
+                return ((double)(this["resultPositionX"]));
+            }
+            set {
+                this["resultPositionX"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public double resultPositionY {
+            get {
+                return ((double)(this["resultPositionY"]));
+            }
+            set {
+                this["resultPositionY"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public double resultWindowHeight {
+            get {
+                return ((double)(this["resultWindowHeight"]));
+            }
+            set {
+                this["resultWindowHeight"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("200")]
+        public double resultWindowWidth {
+            get {
+                return ((double)(this["resultWindowWidth"]));
+            }
+            set {
+                this["resultWindowWidth"] = value;
+            }
+        }
     }
 }

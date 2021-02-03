@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -18,39 +19,39 @@ namespace DumaVoteCounter {
     /// Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window {
+        Voting voting;
+        //bool resultShow;
+        resultWindow res;
         public MainWindow() {
             InitializeComponent();
             Left = Properties.Settings.Default.positionX;
             Top = Properties.Settings.Default.positionY;
             Width = Properties.Settings.Default.windowWidth;
             Height = Properties.Settings.Default.windowHeight;
-            voteAgainstTextBox.TextChanged += voteTextChange;
-            voteAbstainedTextBox.TextChanged += voteTextChange;
-        }
-
-        private void Dragging(object sender, MouseButtonEventArgs e) {
-            this.DragMove();
+            voteAgainstTextBox.TextChanged += VoteTextChange;
+            voteAbstainedTextBox.TextChanged += VoteTextChange;
+            Reset_Click(null, null);
         }
 
 
-        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            Properties.Settings.Default.positionX = Left;
-            Properties.Settings.Default.positionY = Top;
-            Properties.Settings.Default.windowWidth = Width;
-            Properties.Settings.Default.windowHeight = Height;
-            Properties.Settings.Default.Save();
-        }
-
-        private void Exit_Click(object sender, RoutedEventArgs e) {
-            var response = MessageBox.Show("Выйти из программы?", "Выход...", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
-            if (response == MessageBoxResult.No) return;
-            else Application.Current.Shutdown();
-        }
-
-        private void NewVote_Click(object sender, RoutedEventArgs e) {
+        private void Reset_Click(object sender, RoutedEventArgs e) {
             voteForTextBox.Text = peopleNumberTextBox.Text;
             voteAgainstTextBox.Text = "0";
             voteAbstainedTextBox.Text = "0";
+            voting = new Voting(
+                numberOfPeople: Convert.ToInt32(peopleNumberTextBox.Text), 
+                voteFor: Convert.ToInt32(peopleNumberTextBox.Text), 
+                voteAgainst: 0, 
+                voteAbstained: 0);
+            if (res != null) {
+                res.Close();
+                //resultShow = false;
+            }
+            bt_SendResult.IsEnabled = true;
+            peopleNumberTextBox.IsEnabled = true;
+            voteForTextBox.IsEnabled = true;
+            voteAgainstTextBox.IsEnabled = true;
+            voteAbstainedTextBox.IsEnabled = true;
         }
 
         private void InputOnlyDigits(object sender, TextCompositionEventArgs e) {
@@ -58,15 +59,58 @@ namespace DumaVoteCounter {
 
         }
 
-        private void voteTextChange(object sender, TextChangedEventArgs e) {
-            int voteAbstained = 0; int voteAgainst = 0; int peopleNumber = 0;
-            bool havePeopleNumber = Int32.TryParse(peopleNumberTextBox.Text, out peopleNumber);
-            bool haveVoteAgainst = Int32.TryParse(voteAgainstTextBox.Text, out voteAgainst);
-            bool haveVoteAbstained = Int32.TryParse(voteAbstainedTextBox.Text, out voteAbstained);
-            //MessageBox.Show(voteAbstained.ToString());
+        private void VoteTextChange(object sender, TextChangedEventArgs e) {
+            _ = Int32.TryParse(peopleNumberTextBox.Text, out int peopleNumber);
+            _ = Int32.TryParse(voteAgainstTextBox.Text, out int voteAgainst);
+            _ = Int32.TryParse(voteAbstainedTextBox.Text, out int voteAbstained);
             voteForTextBox.Text = (peopleNumber - voteAgainst - voteAbstained).ToString();
+            _ = Int32.TryParse(voteForTextBox.Text, out int voteFor);
+            voting = new Voting(numberOfPeople: peopleNumber, voteFor: voteFor, voteAgainst: voteAgainst, voteAbstained: voteAbstained);
+            bt_SendResult.Content = voting.Edinoglasno() ? "ЕДИНОГЛАСНО!" : "Отправить результат";
         }
 
+        private void SendResults_Click(object sender, RoutedEventArgs e) {
+            SendResult();
+        }
+
+        private void SendResult() {
+            //if (resultShow && res != null) {
+            //    resultShow = false;
+            //    res.Close();
+            //    bt_SendResult.IsEnabled = true;
+            //} else {
+            //    res = new resultWindow(voting);
+            //    resultShow = true;
+            //    res.Show();
+            //    bt_SendResult.IsEnabled = false;
+            //    peopleNumberTextBox.IsEnabled = false;
+            //    voteForTextBox.IsEnabled = false;
+            //    voteAgainstTextBox.IsEnabled = false;
+            //}
+            res = new resultWindow(voting);
+            //resultShow = true;
+            res.Show();
+            bt_SendResult.IsEnabled = false;
+            peopleNumberTextBox.IsEnabled = false;
+            voteForTextBox.IsEnabled = false;
+            voteAgainstTextBox.IsEnabled = false;
+            voteAbstainedTextBox.IsEnabled = false;
+        }
+
+        private void Dragging(object sender, MouseButtonEventArgs e) => this.DragMove();
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            if (res != null) res.Close();
+            Properties.Settings.Default.positionX = Left;
+            Properties.Settings.Default.positionY = Top;
+            Properties.Settings.Default.windowWidth = Width;
+            Properties.Settings.Default.windowHeight = Height;
+            Properties.Settings.Default.Save();
+        }
+        private void Exit_Click(object sender, RoutedEventArgs e) {
+            var response = MessageBox.Show("Выйти из программы?", "Выход...", MessageBoxButton.YesNo, MessageBoxImage.Exclamation);
+            if (response == MessageBoxResult.No) return;
+            else Application.Current.Shutdown();
+        }
 
     }
 }
