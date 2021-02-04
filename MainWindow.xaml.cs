@@ -21,7 +21,7 @@ namespace DumaVoteCounter {
     public partial class MainWindow : Window {
         Voting voting;
         //bool resultShow;
-        resultWindow res;
+        ResultWindow res;
         public MainWindow() {
             InitializeComponent();
             Left = Properties.Settings.Default.positionX;
@@ -43,13 +43,9 @@ namespace DumaVoteCounter {
                 voteFor: Convert.ToInt32(peopleNumberTextBox.Text), 
                 voteAgainst: 0, 
                 voteAbstained: 0);
-            if (res != null) {
-                res.Close();
-                //resultShow = false;
-            }
-            bt_SendResult.IsEnabled = true;
+            if (res != null) res.Close(); //закрваем второе окно если оно есть
+            bt_SendResult.IsEnabled = true; //активация кнопки послать результат и всех полей
             peopleNumberTextBox.IsEnabled = true;
-            voteForTextBox.IsEnabled = true;
             voteAgainstTextBox.IsEnabled = true;
             voteAbstainedTextBox.IsEnabled = true;
         }
@@ -66,35 +62,19 @@ namespace DumaVoteCounter {
             voteForTextBox.Text = (peopleNumber - voteAgainst - voteAbstained).ToString();
             _ = Int32.TryParse(voteForTextBox.Text, out int voteFor);
             voting = new Voting(numberOfPeople: peopleNumber, voteFor: voteFor, voteAgainst: voteAgainst, voteAbstained: voteAbstained);
-            bt_SendResult.Content = voting.Edinoglasno() ? "ЕДИНОГЛАСНО!" : "Отправить результат";
+            bt_SendResult.IsEnabled = !voting.SomeThingWrong; //отключаем кнопку отсылки результата если неправильно заполненны поля
+            bt_SendResult.Content = voting.Edinoglasno? "ЕДИНОГЛАСНО!" : "Отправить результат"; //меняем название кнопки в зависимости от результатов
         }
 
         private void SendResults_Click(object sender, RoutedEventArgs e) {
-            SendResult();
-        }
-
-        private void SendResult() {
-            //if (resultShow && res != null) {
-            //    resultShow = false;
-            //    res.Close();
-            //    bt_SendResult.IsEnabled = true;
-            //} else {
-            //    res = new resultWindow(voting);
-            //    resultShow = true;
-            //    res.Show();
-            //    bt_SendResult.IsEnabled = false;
-            //    peopleNumberTextBox.IsEnabled = false;
-            //    voteForTextBox.IsEnabled = false;
-            //    voteAgainstTextBox.IsEnabled = false;
-            //}
-            res = new resultWindow(voting);
-            //resultShow = true;
+            res = new ResultWindow(voting);
             res.Show();
+            mainWindow.Focus(); //возвращаем фокус на главное окно для отработки хоткеев
             bt_SendResult.IsEnabled = false;
             peopleNumberTextBox.IsEnabled = false;
-            voteForTextBox.IsEnabled = false;
             voteAgainstTextBox.IsEnabled = false;
             voteAbstainedTextBox.IsEnabled = false;
+
         }
 
         private void Dragging(object sender, MouseButtonEventArgs e) => this.DragMove();
@@ -112,5 +92,9 @@ namespace DumaVoteCounter {
             else Application.Current.Shutdown();
         }
 
+        private void Vote_GotFocus(object sender, RoutedEventArgs e) {
+            TextBox text = sender as TextBox;
+            text.SelectAll();
+        }
     }
 }

@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DumaVoteCounter"
         mc:Ignorable="d"
-        Title="Голосование" Height="250" WindowStyle="None" MouseLeftButtonDown="Dragging" Closing="Window_Closing">
+        Title="Голосование" Height="250" WindowStyle="None" MouseLeftButtonDown="Dragging" Closing="Window_Closing" Topmost="True" x:Name="mainWindow">
     <Window.Resources>
         <Style TargetType="TextBox">
             <Setter Property="Margin" Value="2 2"/>
@@ -28,8 +28,6 @@
         </Style>
         <Style TargetType="Button">
             <Setter Property="Margin" Value="2" />
-            <Setter Property="MinWidth" Value="90" />
-            <Setter Property="MinHeight" Value="30" />
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="IsTabStop" Value="False"/>
         </Style>
@@ -41,7 +39,6 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
-                <!--<RowDefinition />-->
         </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />
@@ -49,8 +46,8 @@
             </Grid.ColumnDefinitions>
             <TextBox x:Name="peopleNumberTextBox" Grid.Row="0" Grid.Column="1" Text="49" PreviewTextInput="InputOnlyDigits"/>
             <TextBox x:Name="voteForTextBox" Grid.Row="1" Grid.Column="1" IsEnabled="False"  Text="{Binding ElementName=peopleNumberTextBox, Path=Text}" />
-            <TextBox x:Name="voteAgainstTextBox" Grid.Row="2" Grid.Column="1" Text="0" PreviewTextInput="InputOnlyDigits" IsTabStop="True" />
-        <TextBox x:Name="voteAbstainedTextBox" Grid.Row="3" Grid.Column="1" Text="0" PreviewTextInput="InputOnlyDigits" IsTabStop="True"/>
+        <TextBox x:Name="voteAgainstTextBox" Grid.Row="2" Grid.Column="1" Text="0" PreviewTextInput="InputOnlyDigits" IsTabStop="True" GotFocus="Vote_GotFocus" GotMouseCapture="Vote_GotFocus"/>
+        <TextBox x:Name="voteAbstainedTextBox" Grid.Row="3" Grid.Column="1" Text="0" PreviewTextInput="InputOnlyDigits" IsTabStop="True" GotFocus="Vote_GotFocus" GotMouseCapture="Vote_GotFocus"/>
             <Label Content="Присутствует:"/>
             <Label Grid.Row="1" Content="ЗА" Background="Green" />
             <Label Grid.Row="2" Content="ПРОТИВ" Background="Red" />
@@ -60,9 +57,8 @@
                 <ColumnDefinition/>
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
-            <Button Grid.Column="0" Click="SendResults_Click" x:Name="bt_SendResult" Content="ЕДИНОГЛАСНО"/>
-            <Button Grid.Column="1" Content="Сброс" Click="Reset_Click" />
+            <Button Grid.Column="0" Click="SendResults_Click" x:Name="bt_SendResult" Content="ЕДИНОГЛАСНО" IsDefault="True"/>
+            <Button Grid.Column="1" Content="Сброс" Click="Reset_Click" IsCancel="True" />
         </Grid>
-        <!--<Button Grid.Row="5" Grid.ColumnSpan="2" Content="ЕДИНОГЛАСНО" Click="Edinoglasno_Click"/>-->
     </Grid>
 </Window>

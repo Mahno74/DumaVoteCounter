@@ -14,15 +14,15 @@ namespace DumaVoteCounter {
     /// <summary>
     /// Interaction logic for result.xaml
     /// </summary>
-    public partial class resultWindow : Window {
+    public partial class ResultWindow : Window {
 
-        public resultWindow(Voting voting) {
+        public ResultWindow(Voting voting) {
             InitializeComponent();
             Left = Properties.Settings.Default.resultPositionX;
             Top = Properties.Settings.Default.resultPositionY;
             Width = Properties.Settings.Default.resultWindowWidth;
             Height = Properties.Settings.Default.resultWindowHeight;
-            if (voting.Edinoglasno()) {
+            if (voting.Edinoglasno) {
                 Edinoglasno();
             } else {
                 ResultOfVoting(voting);

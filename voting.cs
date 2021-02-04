@@ -15,8 +15,9 @@ namespace DumaVoteCounter {
             this.voteAgainst = voteAgainst;
             this.voteAbstained = voteAbstained;
         }
-        public bool Edinoglasno() {
-            return voteAgainst == 0 && voteAbstained == 0;
-        }
+        //Проверка на ЕДИНОГЛАСНО
+        public bool Edinoglasno => (voteAgainst == 0 && voteAbstained == 0);
+        //проверка на корректность данных (недопустим отрицательный результат)
+        public bool SomeThingWrong => (voteAgainst + voteAbstained) > numberOfPeople;
     }
 }
