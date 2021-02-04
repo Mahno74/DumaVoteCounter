@@ -1,19 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
+﻿using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
 
 namespace DumaVoteCounter {
-    /// <summary>
-    /// Interaction logic for result.xaml
-    /// </summary>
     public partial class ResultWindow : Window {
 
         public ResultWindow(Voting voting) {
@@ -23,26 +12,39 @@ namespace DumaVoteCounter {
             Width = Properties.Settings.Default.resultWindowWidth;
             Height = Properties.Settings.Default.resultWindowHeight;
             if (voting.Edinoglasno) {
-                Edinoglasno();
+                Result_Edinoglasno();
             } else {
-                ResultOfVoting(voting);
+                Result_NOT_Edinoglasno(voting);
             }
         }
 
-        private void Edinoglasno() {
-            container_edinoglano.Visibility = Visibility.Visible;
-            container_voteFor.Visibility = Visibility.Collapsed;
-            container_voteAgainst.Visibility = Visibility.Collapsed;
-            container_voteAbstained.Visibility = Visibility.Collapsed;
+        private void Result_Edinoglasno() {
+            container_lb_edinoglano.Visibility = Visibility.Visible;
+            container_lb_voteFor.Visibility = Visibility.Collapsed;
+            container_lb_voteAgainst.Visibility = Visibility.Collapsed;
+            container_lb_voteAbstained.Visibility = Visibility.Collapsed;
+            container_lb_accepted.Background = Brushes.LightGreen;
+            lb_accepted.Content = "РЕШЕНИЕ ПРИНЯТО";
         }
-        private void ResultOfVoting(Voting voting) {
-            container_edinoglano.Visibility = Visibility.Collapsed;
-            container_voteFor.Visibility = Visibility.Visible;
-            container_voteAgainst.Visibility = Visibility.Visible;
-            container_voteAbstained.Visibility = Visibility.Visible;
-            lb_voteFor.Content = $"ЗА {voting.voteFor}";
-            lb_voteAgainst.Content = $"ПРОТИВ {voting.voteAgainst}";
-            lb_voteAbstained.Content = $"ВОЗДЕРЖАЛИСЬ {voting.voteAbstained}";
+
+        private void Result_NOT_Edinoglasno(Voting voting) {
+            if (voting.Accepted) {
+                container_lb_accepted.Background = Brushes.LightGray;
+                lb_accepted.Content = "РЕШЕНИЕ ПРИНЯТО";
+            } else {
+                container_lb_accepted.Background = Brushes.LightGray;
+                lb_accepted.Content = "РЕШЕНИЕ НЕ ПРИНЯТО";
+                lb_accepted.Foreground = Brushes.Red;
+                container_lb_accepted.BorderBrush = Brushes.Red;
+                container_lb_accepted.BorderThickness = new Thickness(7);
+            }
+            container_lb_edinoglano.Visibility = Visibility.Collapsed;
+            container_lb_voteFor.Visibility = Visibility.Visible;
+            container_lb_voteAgainst.Visibility = Visibility.Visible;
+            container_lb_voteAbstained.Visibility = Visibility.Visible;
+            lb_voteFor.Content = $"ЗА - {voting.voteFor}";
+            lb_voteAgainst.Content = $"ПРОТИВ - {voting.voteAgainst}";
+            lb_voteAbstained.Content = $"ВОЗДЕРЖАЛИСЬ - {voting.voteAbstained}";
         }
 
         private void Result_Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {

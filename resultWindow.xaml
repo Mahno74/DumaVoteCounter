@@ -5,34 +5,40 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DumaVoteCounter"
         mc:Ignorable="d"
-        Title="result" Height="200" Width="200" Closing="Result_Window_Closing" WindowStyle="None" MouseLeftButtonDown="Dragging">
-    <Window.Resources>
-
-    </Window.Resources>
+        Height="200" Width="200" Closing="Result_Window_Closing" WindowStyle="None" 
+        ResizeMode="CanResizeWithGrip" AllowsTransparency="True" MouseLeftButtonDown="Dragging" Topmost="True" 
+        BorderBrush="White" BorderThickness="3" >
     <Grid>
         <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
+        <!--Решение принято-->
+        <Border Grid.Row="0" Background="LightGray" x:Name="container_lb_accepted">
+            <Viewbox  Stretch="Fill" >
+                <Label x:Name="lb_accepted" Content="РЕШЕНИЕ ПРИНЯТО" FontWeight="Bold"/>
+            </Viewbox>
+        </Border>
         <!--Единогласно-->
-        <Border Background="LightGreen" Grid.RowSpan="3" x:Name="container_edinoglano" Visibility="Collapsed">
+        <Border Grid.Row="1" Background="LightGreen" Grid.RowSpan="3" x:Name="container_lb_edinoglano" Visibility="Collapsed">
             <Viewbox  Stretch="Uniform" >
                 <Label  Content="ЕДИНОГЛАСНО" FontWeight="Bold"/>
             </Viewbox>
         </Border>
         <!--Результаты голосования-->
-        <Border Grid.Row="0" Background="LightGreen" x:Name="container_voteFor" Visibility="Visible">
+        <Border Grid.Row="1" Background="LightGreen" x:Name="container_lb_voteFor" Visibility="Visible">
             <Viewbox  Stretch="Uniform" >
                 <Label  FontWeight="Bold" x:Name="lb_voteFor"/>
             </Viewbox>
         </Border>
-        <Border Grid.Row="1" Background="Red" x:Name="container_voteAgainst" Visibility="Visible">
+        <Border Grid.Row="2" Background="Red" x:Name="container_lb_voteAgainst" Visibility="Visible">
             <Viewbox  Stretch="Uniform" >
                 <Label  FontWeight="Bold" x:Name="lb_voteAgainst"/>
             </Viewbox>
         </Border>
-        <Border Grid.Row="2" Background="Yellow" x:Name="container_voteAbstained" Visibility="Visible">
+        <Border Grid.Row="3" Background="Yellow" x:Name="container_lb_voteAbstained" Visibility="Visible">
             <Viewbox  Stretch="Uniform" >
                 <Label  FontWeight="Bold" x:Name="lb_voteAbstained"/>
             </Viewbox>

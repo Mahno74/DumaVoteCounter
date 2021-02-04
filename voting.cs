@@ -19,5 +19,7 @@ namespace DumaVoteCounter {
         public bool Edinoglasno => (voteAgainst == 0 && voteAbstained == 0);
         //проверка на корректность данных (недопустим отрицательный результат)
         public bool SomeThingWrong => (voteAgainst + voteAbstained) > numberOfPeople;
+        public bool Accepted => (voteAgainst < voteFor);
+
     }
 }
