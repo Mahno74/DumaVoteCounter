@@ -35,23 +35,22 @@
         </Style>
     </Window.Resources>
     <StackPanel x:Name="mainStackPanel">
+        <!--Всего присутствует-->
         <Label Content="Присутствует:" Background="LightGray"/>
-
         <TextBox x:Name="tb_PeopleNumber" Background="LightGray" Grid.Row="1" Text="49" PreviewTextInput="InputOnlyDigits"/>
-
+        <!--За-->
         <Label Grid.Row="2" Content="-ЗА-" Background="Green"/>
         <TextBox Grid.Row="3" Background="Green" x:Name="tb_VoteFor" IsReadOnly="True"  Text="{Binding ElementName=tb_PeopleNumber, Path=Text}" />
-
+        <!--Против-->
         <Label Grid.Row="4" Content="-ПРОТИВ-" Background="Red" />
         <TextBox x:Name="tb_VoteAgainst" Background="Red" Grid.Row="5" Text="0" PreviewTextInput="InputOnlyDigits" IsTabStop="True" GotFocus="Vote_GotFocus" />
-
-
+        <!--Воздержались-->
         <Label Grid.Row="6" Content="-ВОЗДЕРЖАЛИСЬ-" Background="Yellow" />
         <TextBox x:Name="tb_voteAbstained" Background="Yellow" Grid.Row="7" Text="0" PreviewTextInput="InputOnlyDigits" IsTabStop="True" GotFocus="Vote_GotFocus" />
-
+        <!--Кнопки-->
         <Button Grid.Row="8" Click="SendResults_Click" x:Name="bt_SendResult" Content="ЕДИНОГЛАСНО!" IsDefault="True" MinHeight="50"/>
         <Button Grid.Row="9" Content="Сброс" Click="Reset_Click" IsCancel="True" />
-
+        <!--Скриншот второго окна-->
         <Image Grid.Row="10" x:Name="bottom_image"  Stretch="Fill" />
 
         <StackPanel.ContextMenu>

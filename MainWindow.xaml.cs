@@ -29,11 +29,20 @@ namespace DumaVoteCounter {
             Top = Properties.Settings.Default.positionY;
             Width = Properties.Settings.Default.windowWidth;
             Height = Properties.Settings.Default.windowHeight;
-            tb_VoteAgainst.TextChanged += VoteTextChange;
-            tb_voteAbstained.TextChanged += VoteTextChange;
+            EventSubscriptions(); //подписываемся на события
+
             Reset_Click(null, null);
         }
 
+        private void EventSubscriptions() {
+            //изменения текта в полях ПРОТИВ и ВОЗДЕРЖАЛИСЬ
+            tb_VoteAgainst.TextChanged += VoteTextChange;
+            tb_voteAbstained.TextChanged += VoteTextChange;
+            //колесико мыши в полях ПРОТИВ и ВОЗДЕРЖАЛИСЬ
+            tb_VoteAgainst.MouseWheel += VotesScroll;
+            tb_voteAbstained.MouseWheel += VotesScroll;
+
+        }
 
         private void Reset_Click(object sender, RoutedEventArgs e) {
             tb_VoteFor.Text = tb_PeopleNumber.Text;
@@ -165,5 +174,28 @@ namespace DumaVoteCounter {
 
         }
         #endregion
+
+
+        //Меняем количесво голосов с помощью колеса мыши
+        private void VotesScroll(object sender, MouseWheelEventArgs e) {
+
+            string sender_name = (sender as TextBox).Name;
+
+            foreach (UIElement c in mainStackPanel.Children) {
+                if (c is TextBox && ((TextBox)c).Name == sender_name) {
+                    _ = Int32.TryParse(tb_PeopleNumber.Text, out int peopleNumber);
+                    _ = Int32.TryParse(((TextBox)c).Text, out int votes);
+
+                if (e.Delta > 0 && votes < peopleNumber) {
+                    votes++;
+                }
+                if (e.Delta < 0 && votes > 0) {
+                    votes--;
+                }
+                ((TextBox)c).Text = votes.ToString();
+                }
+                
+            }
+        }
     }
 }
