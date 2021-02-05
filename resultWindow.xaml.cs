@@ -69,6 +69,7 @@ namespace DumaVoteCounter {
             }
         }
 
+        //регклировка размеров колесиком
         private void Window_MouseWheel(object sender, MouseWheelEventArgs e) {
             if (e.Delta > 0) {
                 Width += 25;

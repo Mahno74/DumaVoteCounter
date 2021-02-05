@@ -22,7 +22,6 @@ namespace DumaVoteCounter {
     public partial class MainWindow : Window {
         Voting voting;
         public static bool fullscreen_resultWindow;
-        //bool resultShow;
         ResultWindow resultWindow;
         public MainWindow() {
             InitializeComponent();
@@ -51,8 +50,7 @@ namespace DumaVoteCounter {
             tb_VoteFor.IsEnabled = true;
             tb_VoteAgainst.IsEnabled = true;
             tb_voteAbstained.IsEnabled = true;
-
-            ScreenShot(false);
+            ScreenShot(false); //убираем скриншот
         }
 
         private void InputOnlyDigits(object sender, TextCompositionEventArgs e) {
@@ -108,6 +106,7 @@ namespace DumaVoteCounter {
                     RenderTargetBitmap bmp = new RenderTargetBitmap(Convert.ToInt32(resultWindow.Width), Convert.ToInt32(resultWindow.Height), 96, 96, PixelFormats.Pbgra32);
                     bmp.Render(resultWindow);
                     bottom_image.Source = bmp;
+                    bottom_image.Height = 200;
                     //var encoder = new PngBitmapEncoder();
                     //encoder.Frames.Add(BitmapFrame.Create(bmp));
                     //using (Stream stm = File.Create(@"D:\12\test.png"))
