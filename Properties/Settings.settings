@@ -15,7 +15,7 @@
       <Value Profile="(Default)">200</Value>
     </Setting>
     <Setting Name="resultPositionX" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">0</Value>
+      <Value Profile="(Default)">205</Value>
     </Setting>
     <Setting Name="resultPositionY" Type="System.Double" Scope="User">
       <Value Profile="(Default)">0</Value>

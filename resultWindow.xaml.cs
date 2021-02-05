@@ -16,6 +16,7 @@ namespace DumaVoteCounter {
             } else {
                 Result_NOT_Edinoglasno(voting);
             }
+            
         }
 
         private void Result_Edinoglasno() {
@@ -48,12 +49,34 @@ namespace DumaVoteCounter {
         }
 
         private void Result_Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
+            //не сохраняем размеры доп экрана если выбран полнооконный режим
+            if (!MainWindow.fullscreen_resultWindow) {
+                Properties.Settings.Default.resultWindowWidth = Width;
+                Properties.Settings.Default.resultWindowHeight = Height;
+            }
             Properties.Settings.Default.resultPositionX = Left;
             Properties.Settings.Default.resultPositionY = Top;
-            Properties.Settings.Default.resultWindowWidth = Width;
-            Properties.Settings.Default.resultWindowHeight = Height;
             Properties.Settings.Default.Save();
         }
         private void Dragging(object sender, MouseButtonEventArgs e) => this.DragMove();
+
+        private void Window_Loaded(object sender, RoutedEventArgs e) {
+            //вспоминаем был ли выбран полный или не полный экран при последнем запуске окна
+            if (MainWindow.fullscreen_resultWindow) {
+                this.WindowState = WindowState.Maximized;
+            } else {
+                this.WindowState = WindowState.Normal;
+            }
+        }
+
+        private void Window_MouseWheel(object sender, MouseWheelEventArgs e) {
+            if (e.Delta > 0) {
+                Width += 25;
+                Height += 25;
+            } else {
+                Width -= 25;
+                Height -= 25;
+            }
+        }
     }
 }
