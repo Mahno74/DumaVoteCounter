@@ -52,7 +52,7 @@
         <TextBox Grid.Row="5" x:Name="tb_VoteAbstained" Background="Yellow"  Text="0" PreviewTextInput="InputOnlyDigits" IsTabStop="True" GotFocus="Vote_GotFocus" />
         <!--Кнопки-->
         <Button Grid.Row="6" Click="SendResults_Click" x:Name="bt_SendResult" Content="ЕДИНОГЛАСНО!" IsDefault="True" MinHeight="50"/>
-        <Button Grid.Row="7" Content="СБРОС" Click="Reset_Click" IsCancel="True" />
+        <Button Grid.Row="7" Content="СБРОС" Click="Reset_Click" IsCancel="True" Background="LightBlue" Foreground="Black"/>
         <!--Скриншот второго окна-->
         <Image Grid.Row="8" x:Name="bottom_image"  Stretch="Fill" />
 
