@@ -23,6 +23,7 @@ namespace DumaVoteCounter {
         Voting voting;
         public static bool fullscreen_resultWindow;
         ResultWindow resultWindow;
+        public int peopleNumber = 49;
         public MainWindow() {
             InitializeComponent();
             Left = Properties.Settings.Default.positionX;
@@ -36,47 +37,56 @@ namespace DumaVoteCounter {
 
         private void EventSubscriptions() {
             //изменения текта в полях ПРОТИВ и ВОЗДЕРЖАЛИСЬ
-            tb_VoteAgainst.TextChanged += VoteTextChange;
-            tb_voteAbstained.TextChanged += VoteTextChange;
+            tb_VoteAgainst.TextChanged += VotesTextChange;
+            tb_VoteAbstained.TextChanged += VotesTextChange;
+            tb_VoteFor.TextChanged += VotesTextChange;
             //колесико мыши в полях ПРОТИВ и ВОЗДЕРЖАЛИСЬ
             tb_VoteAgainst.MouseWheel += VotesScroll;
-            tb_voteAbstained.MouseWheel += VotesScroll;
+            tb_VoteAbstained.MouseWheel += VotesScroll;
 
         }
 
         private void Reset_Click(object sender, RoutedEventArgs e) {
-            tb_VoteFor.Text = tb_PeopleNumber.Text;
+            tb_VoteFor.Text = peopleNumber.ToString();
             tb_VoteAgainst.Text = "0";
-            tb_voteAbstained.Text = "0";
+            tb_VoteAbstained.Text = "0";
+            
             voting = new Voting(
-                numberOfPeople: Convert.ToInt32(tb_PeopleNumber.Text), 
-                voteFor: Convert.ToInt32(tb_PeopleNumber.Text), 
+                voteFor: peopleNumber, 
                 voteAgainst: 0, 
                 voteAbstained: 0);
             if (resultWindow != null) resultWindow.Close(); //закрваем второе окно если оно есть
             bt_SendResult.IsEnabled = true; //активация кнопки послать результат и всех полей
-            tb_PeopleNumber.IsEnabled = true;
             tb_VoteFor.IsEnabled = true;
             tb_VoteAgainst.IsEnabled = true;
-            tb_voteAbstained.IsEnabled = true;
+            tb_VoteAbstained.IsEnabled = true;
             ScreenShot(false); //убираем скриншот
         }
 
         private void InputOnlyDigits(object sender, TextCompositionEventArgs e) {
             if (!Char.IsDigit(e.Text, 0)) e.Handled = true;
-
         }
 
-        private void VoteTextChange(object sender, TextChangedEventArgs e) {
-            _ = Int32.TryParse(tb_PeopleNumber.Text, out int peopleNumber);
+        private void VotesTextChange(object sender, TextChangedEventArgs e) {
+            //_ = Int32.TryParse(tb_VoteFor.Text, out int voteFor);
             _ = Int32.TryParse(tb_VoteAgainst.Text, out int voteAgainst);
-            _ = Int32.TryParse(tb_voteAbstained.Text, out int voteAbstained);
-            tb_VoteFor.Text = (peopleNumber - voteAgainst - voteAbstained).ToString(); //высчитываем ЗА на сновании полей против и воздежался
-            _ = Int32.TryParse(tb_VoteFor.Text, out int voteFor);
-            voting = new Voting(numberOfPeople: peopleNumber, voteFor: voteFor, voteAgainst: voteAgainst, voteAbstained: voteAbstained);
+            _ = Int32.TryParse(tb_VoteAbstained.Text, out int voteAbstained);
+
+            int voteFor = peopleNumber - voteAgainst - voteAbstained;
+            voting = new Voting(voteFor: voteFor, voteAgainst: voteAgainst, voteAbstained: voteAbstained);
+
+            if (voteAgainst == 0 & voteAbstained == 0) {
+                peopleNumber = voteFor; tb_VoteFor.IsEnabled = true;
+            } else {
+                tb_VoteFor.IsEnabled = false;
+            }
+
+            tb_VoteFor.Text = voting.voteFor.ToString();
+
 
             bt_SendResult.IsEnabled = !voting.SomeThingWrong; //отключаем кнопку отсылки результата если неправильно заполненны поля
-            bt_SendResult.Content = voting.Edinoglasno? "ЕДИНОГЛАСНО!" : "Отправить результат"; //меняем название кнопки в зависимости от результатов
+            bt_SendResult.Content = voting.Edinoglasno ? "ЕДИНОГЛАСНО!" : "Отправить результат"; //меняем название кнопки в зависимости от результатов
+
         }
 
         private void SendResults_Click(object sender, RoutedEventArgs e) {
@@ -85,10 +95,9 @@ namespace DumaVoteCounter {
             ScreenShot(true);
             mainWindow.Focus(); //возвращаем фокус на главное окно для отработки хоткеев
             bt_SendResult.IsEnabled = false;
-            tb_PeopleNumber.IsEnabled = false;
             tb_VoteFor.IsEnabled = false;
             tb_VoteAgainst.IsEnabled = false;
-            tb_voteAbstained.IsEnabled = false;
+            tb_VoteAbstained.IsEnabled = false;
         }
 
         private void Dragging(object sender, MouseButtonEventArgs e) => this.DragMove();
@@ -183,16 +192,20 @@ namespace DumaVoteCounter {
 
             foreach (UIElement c in mainStackPanel.Children) {
                 if (c is TextBox && ((TextBox)c).Name == sender_name) {
-                    _ = Int32.TryParse(tb_PeopleNumber.Text, out int peopleNumber);
+                    _ = Int32.TryParse(tb_VoteFor.Text, out int voteFor);
                     _ = Int32.TryParse(((TextBox)c).Text, out int votes);
 
-                if (e.Delta > 0 && votes < peopleNumber) {
-                    votes++;
+                if (e.Delta > 0 && voteFor > 0) {
+                        votes++;
+                        //voteFor--;
+
                 }
                 if (e.Delta < 0 && votes > 0) {
-                    votes--;
-                }
-                ((TextBox)c).Text = votes.ToString();
+                        votes--;
+                        //voteFor++;
+                    }
+                    ((TextBox)c).Text = votes.ToString();
+                    //tb_VoteFor.Text = voteFor.ToString();
                 }
                 
             }
