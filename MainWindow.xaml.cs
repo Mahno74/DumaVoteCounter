@@ -37,9 +37,9 @@ namespace DumaVoteCounter {
 
         private void EventSubscriptions() {
             //изменения текта в полях ПРОТИВ и ВОЗДЕРЖАЛИСЬ
-            tb_VoteAgainst.TextChanged += VotesTextChange;
-            tb_VoteAbstained.TextChanged += VotesTextChange;
-            tb_VoteFor.TextChanged += VotesTextChange;
+            tb_VoteAgainst.TextChanged += VotesAgainsAbdstainetTextChange;
+            tb_VoteAbstained.TextChanged += VotesAgainsAbdstainetTextChange;
+            tb_VoteFor.TextChanged += VotesForTextChange;
             //колесико мыши в полях ПРОТИВ и ВОЗДЕРЖАЛИСЬ
             tb_VoteAgainst.MouseWheel += VotesScroll;
             tb_VoteAbstained.MouseWheel += VotesScroll;
@@ -67,7 +67,18 @@ namespace DumaVoteCounter {
             if (!Char.IsDigit(e.Text, 0)) e.Handled = true;
         }
 
-        private void VotesTextChange(object sender, TextChangedEventArgs e) {
+        private void VotesForTextChange(object sender, TextChangedEventArgs e) {
+
+            _ = Int32.TryParse(tb_VoteFor.Text, out int voteFor);
+            _ = Int32.TryParse(tb_VoteAgainst.Text, out int voteAgainst);
+            _ = Int32.TryParse(tb_VoteAbstained.Text, out int voteAbstained);
+
+            if (voteAgainst == 0 & voteAbstained == 0) {
+                peopleNumber = voteFor; 
+            } 
+        }
+        private void VotesAgainsAbdstainetTextChange(object sender, TextChangedEventArgs e) {
+
             //_ = Int32.TryParse(tb_VoteFor.Text, out int voteFor);
             _ = Int32.TryParse(tb_VoteAgainst.Text, out int voteAgainst);
             _ = Int32.TryParse(tb_VoteAbstained.Text, out int voteAbstained);
