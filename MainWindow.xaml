@@ -36,8 +36,9 @@
     </Window.Resources>
     <StackPanel x:Name="mainStackPanel">
         <!--За-->
-        <Label Grid.Row="0" Content="-ЗА-" Background="Green"/>
-        <TextBox Grid.Row="1" Background="Green" x:Name="tb_VoteFor" Text="49" PreviewTextInput="InputOnlyDigits"/>
+        <!--<Label x:Name="lv_VoteFor" Grid.Row="0" Content="-ЗА-" Background="Green"/>-->
+        <Label x:Name="lb_VoteFor" Grid.Row="0" Content="Всего присутвует" Background="LightGray"/>
+        <TextBox Grid.Row="1" Background="LightGray" x:Name="tb_VoteFor" Text="49" PreviewTextInput="InputOnlyDigits"/>
         <!--Против-->
         <Label Grid.Row="2" Content="-ПРОТИВ-" Background="Red" />
         <TextBox Grid.Row="3" x:Name="tb_VoteAgainst" Background="Red"  Text="0" PreviewTextInput="InputOnlyDigits" IsTabStop="True" GotFocus="Vote_GotFocus" />

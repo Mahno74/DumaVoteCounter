@@ -88,8 +88,15 @@ namespace DumaVoteCounter {
 
             if (voteAgainst == 0 & voteAbstained == 0) {
                 peopleNumber = voteFor; tb_VoteFor.IsEnabled = true;
+                tb_VoteFor.Background = Brushes.LightGray;
+                lb_VoteFor.Background = Brushes.LightGray;
+                lb_VoteFor.Content = "Всего присутвует";
             } else {
                 tb_VoteFor.IsEnabled = false;
+                lb_VoteFor.Content = "-ЗА-";
+                tb_VoteFor.Background = Brushes.Green;
+                lb_VoteFor.Background = Brushes.Green;
+
             }
 
             tb_VoteFor.Text = voting.voteFor.ToString();
