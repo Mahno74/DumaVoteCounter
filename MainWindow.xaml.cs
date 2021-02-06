@@ -40,10 +40,7 @@ namespace DumaVoteCounter {
             tb_VoteAgainst.Text = "0";
             tb_VoteAbstained.Text = "0";
             
-            voting = new Voting(
-                voteFor: Settings.peopleNumber, 
-                voteAgainst: 0, 
-                voteAbstained: 0);
+            voting = new Voting();
             if (resultWindow != null) resultWindow.Close(); //закрваем второе окно если оно есть
             bt_SendResult.IsEnabled = true; //активация кнопки послать результат и всех полей
             tb_VoteFor.IsEnabled = true;
@@ -56,6 +53,8 @@ namespace DumaVoteCounter {
             if (!Char.IsDigit(e.Text, 0)) e.Handled = true;
         }
 
+
+        //изменение текст бокса с общим числом депутатов
         private void VotesForTextChange(object sender, TextChangedEventArgs e) {
 
             _ = Int32.TryParse(tb_VoteFor.Text, out int voteFor);
@@ -66,17 +65,18 @@ namespace DumaVoteCounter {
                 Settings.peopleNumber = voteFor; 
             } 
         }
+        //изменение текст боксов с Против - Воздержались
         private void VotesAgainsAbdstainetTextChange(object sender, TextChangedEventArgs e) {
 
-            //_ = Int32.TryParse(tb_VoteFor.Text, out int voteFor);
             _ = Int32.TryParse(tb_VoteAgainst.Text, out int voteAgainst);
             _ = Int32.TryParse(tb_VoteAbstained.Text, out int voteAbstained);
 
-            int voteFor = Settings.peopleNumber - voteAgainst - voteAbstained;
-            voting = new Voting(voteFor: voteFor, voteAgainst: voteAgainst, voteAbstained: voteAbstained);
 
-            if (voteAgainst == 0 & voteAbstained == 0) {
-                Settings.peopleNumber = voteFor; tb_VoteFor.IsEnabled = true;
+            voting = new Voting(voteAgainst, voteAbstained);
+
+            if (voting.Edinoglasno) {
+                Settings.peopleNumber = voting.voteFor; 
+                tb_VoteFor.IsEnabled = true;
                 tb_VoteFor.Background = Brushes.LightGray;
                 lb_VoteFor.Background = Brushes.LightGray;
                 lb_VoteFor.Content = "Всего присутвует";
