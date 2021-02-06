@@ -1,19 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Drawing;
-using System.IO;
 
 namespace DumaVoteCounter {
     /// <summary>
@@ -23,7 +13,6 @@ namespace DumaVoteCounter {
         Voting voting;
         public static bool fullscreen_resultWindow;
         ResultWindow resultWindow;
-        public int peopleNumber = 49;
         public MainWindow() {
             InitializeComponent();
             Left = Properties.Settings.Default.positionX;
@@ -47,12 +36,12 @@ namespace DumaVoteCounter {
         }
 
         private void Reset_Click(object sender, RoutedEventArgs e) {
-            tb_VoteFor.Text = peopleNumber.ToString();
+            tb_VoteFor.Text = Settings.peopleNumber.ToString();
             tb_VoteAgainst.Text = "0";
             tb_VoteAbstained.Text = "0";
             
             voting = new Voting(
-                voteFor: peopleNumber, 
+                voteFor: Settings.peopleNumber, 
                 voteAgainst: 0, 
                 voteAbstained: 0);
             if (resultWindow != null) resultWindow.Close(); //закрваем второе окно если оно есть
@@ -74,7 +63,7 @@ namespace DumaVoteCounter {
             _ = Int32.TryParse(tb_VoteAbstained.Text, out int voteAbstained);
 
             if (voteAgainst == 0 & voteAbstained == 0) {
-                peopleNumber = voteFor; 
+                Settings.peopleNumber = voteFor; 
             } 
         }
         private void VotesAgainsAbdstainetTextChange(object sender, TextChangedEventArgs e) {
@@ -83,11 +72,11 @@ namespace DumaVoteCounter {
             _ = Int32.TryParse(tb_VoteAgainst.Text, out int voteAgainst);
             _ = Int32.TryParse(tb_VoteAbstained.Text, out int voteAbstained);
 
-            int voteFor = peopleNumber - voteAgainst - voteAbstained;
+            int voteFor = Settings.peopleNumber - voteAgainst - voteAbstained;
             voting = new Voting(voteFor: voteFor, voteAgainst: voteAgainst, voteAbstained: voteAbstained);
 
             if (voteAgainst == 0 & voteAbstained == 0) {
-                peopleNumber = voteFor; tb_VoteFor.IsEnabled = true;
+                Settings.peopleNumber = voteFor; tb_VoteFor.IsEnabled = true;
                 tb_VoteFor.Background = Brushes.LightGray;
                 lb_VoteFor.Background = Brushes.LightGray;
                 lb_VoteFor.Content = "Всего присутвует";
