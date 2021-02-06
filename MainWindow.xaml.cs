@@ -76,12 +76,12 @@ namespace DumaVoteCounter {
 
             if (voting.Edinoglasno) {
                 Settings.peopleNumber = voting.voteFor; 
-                tb_VoteFor.IsEnabled = true;
+                tb_VoteFor.IsReadOnly = false;
                 tb_VoteFor.Background = Brushes.LightGray;
                 lb_VoteFor.Background = Brushes.LightGray;
-                lb_VoteFor.Content = "Всего присутвует";
+                lb_VoteFor.Content = "ПРИСУТСТВУЕТ";
             } else {
-                tb_VoteFor.IsEnabled = false;
+                tb_VoteFor.IsReadOnly = true;
                 lb_VoteFor.Content = "-ЗА-";
                 tb_VoteFor.Background = Brushes.Green;
                 lb_VoteFor.Background = Brushes.Green;
@@ -92,7 +92,7 @@ namespace DumaVoteCounter {
 
 
             bt_SendResult.IsEnabled = !voting.SomeThingWrong; //отключаем кнопку отсылки результата если неправильно заполненны поля
-            bt_SendResult.Content = voting.Edinoglasno ? "ЕДИНОГЛАСНО!" : "Отправить результат"; //меняем название кнопки в зависимости от результатов
+            bt_SendResult.Content = voting.Edinoglasno ? "ЕДИНОГЛАСНО!" : "ОТПРАВИТЬ"; //меняем название кнопки в зависимости от результатов
 
         }
 
@@ -126,20 +126,12 @@ namespace DumaVoteCounter {
             switch (show) {
                 case true:
                     if (resultWindow == null) return;
-                    //resultWindow.Measure(new System.Windows.Size(300, 300));
-                    //resultWindow.Arrange(new Rect(new System.Windows.Size(300, 300)));
                     RenderTargetBitmap bmp = new RenderTargetBitmap(Convert.ToInt32(resultWindow.Width), Convert.ToInt32(resultWindow.Height), 96, 96, PixelFormats.Pbgra32);
                     bmp.Render(resultWindow);
                     bottom_image.Source = bmp;
-                    bottom_image.Height = 200;
-                    //var encoder = new PngBitmapEncoder();
-                    //encoder.Frames.Add(BitmapFrame.Create(bmp));
-                    //using (Stream stm = File.Create(@"D:\12\test.png"))
-                    //encoder.Save(stm);
                     break;
                 case false:
                     bottom_image.Source = null;
-
                     break;
             }
         }
@@ -152,16 +144,16 @@ namespace DumaVoteCounter {
             Properties.Settings.Default.resultWindowHeight = 200;
             mainWindow.Left = 0;
             mainWindow.Top = 0;
-            mainWindow.Width = 200;
-            mainWindow.Height = 400;
+            mainWindow.Width = MinWidth;
+            mainWindow.Height = MinHeight;
             menuItemFullScreenChecked.IsChecked = false;
             if (resultWindow != null) {
-                resultWindow.Left = 201;
+                resultWindow.Left = MinWidth +1;
                 resultWindow.Top = 0;
                 resultWindow.Width = 200;
                 resultWindow.Height = 200;
             } else {
-                Properties.Settings.Default.resultPositionX = 201;
+                Properties.Settings.Default.resultPositionX = MinWidth + 1;
                 Properties.Settings.Default.resultPositionY = 0;
                 Properties.Settings.Default.resultWindowWidth = 200;
                 Properties.Settings.Default.resultWindowHeight = 200;
@@ -202,17 +194,10 @@ namespace DumaVoteCounter {
                     _ = Int32.TryParse(tb_VoteFor.Text, out int voteFor);
                     _ = Int32.TryParse(((TextBox)c).Text, out int votes);
 
-                if (e.Delta > 0 && voteFor > 0) {
-                        votes++;
-                        //voteFor--;
+                    if (e.Delta > 0 && voteFor > 0) votes++;
+                    if (e.Delta < 0 && votes > 0) votes--;
 
-                }
-                if (e.Delta < 0 && votes > 0) {
-                        votes--;
-                        //voteFor++;
-                    }
                     ((TextBox)c).Text = votes.ToString();
-                    //tb_VoteFor.Text = voteFor.ToString();
                 }
                 
             }

@@ -5,15 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DumaVoteCounter"
         mc:Ignorable="d"
-        Title="Голосование" WindowStyle="None" MouseLeftButtonDown="Dragging" Closing="Window_Closing" Topmost="True" x:Name="mainWindow">
+        Title="Голосование" MinHeight="380" MinWidth="165" WindowStyle="None" MouseLeftButtonDown="Dragging" Closing="Window_Closing" Topmost="True" x:Name="mainWindow">
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="Margin" Value="2 0"/>
             <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="FontFamily" Value="Times New Roman"/>
+            <Setter Property="Height" Value="35"/>
 
             <Setter Property="BorderThickness" Value="1 1 1 0"/>
             <Setter Property="BorderBrush" Value="Black"/>
-            <Setter Property="MinHeight" Value="10" />
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="IsTabStop" Value="False"/>
@@ -22,7 +24,8 @@
             <Setter Property="BorderThickness" Value="1 0 1 1"/>
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="Margin" Value="2 0 2 8"/>
-            <Setter Property="FontSize" Value="22"/>
+            <Setter Property="FontFamily" Value="Impact"/>
+            <Setter Property="FontSize" Value="40"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
@@ -32,12 +35,13 @@
             <Setter Property="Margin" Value="2 2" />
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="FontSize" Value="17"/>
+            <Setter Property="FontFamily" Value="Times New Roman"/>
         </Style>
     </Window.Resources>
     <StackPanel x:Name="mainStackPanel">
         <!--За-->
-        <!--<Label x:Name="lv_VoteFor" Grid.Row="0" Content="-ЗА-" Background="Green"/>-->
-        <Label x:Name="lb_VoteFor" Grid.Row="0" Content="Всего присутвует" Background="LightGray"/>
+        <Label x:Name="lb_VoteFor" Grid.Row="0" Content="ПРИСУТСТВУЕТ" Background="LightGray" />
         <TextBox Grid.Row="1" Background="LightGray" x:Name="tb_VoteFor" Text="49" PreviewTextInput="InputOnlyDigits"/>
         
         <!--Против-->
@@ -48,7 +52,7 @@
         <TextBox Grid.Row="5" x:Name="tb_VoteAbstained" Background="Yellow"  Text="0" PreviewTextInput="InputOnlyDigits" IsTabStop="True" GotFocus="Vote_GotFocus" />
         <!--Кнопки-->
         <Button Grid.Row="6" Click="SendResults_Click" x:Name="bt_SendResult" Content="ЕДИНОГЛАСНО!" IsDefault="True" MinHeight="50"/>
-        <Button Grid.Row="7" Content="Сброс" Click="Reset_Click" IsCancel="True" />
+        <Button Grid.Row="7" Content="СБРОС" Click="Reset_Click" IsCancel="True" />
         <!--Скриншот второго окна-->
         <Image Grid.Row="8" x:Name="bottom_image"  Stretch="Fill" />
 
