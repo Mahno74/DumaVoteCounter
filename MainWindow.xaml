@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-     Title="Голосование" MinHeight="385" MinWidth="165" WindowStyle="None" MouseLeftButtonDown="Dragging" Closing="Window_Closing" Topmost="True" x:Name="mainWindow">
+     Title="Голосование" MinHeight="405" MinWidth="165" WindowStyle="None" MouseLeftButtonDown="Dragging" Closing="Window_Closing" Topmost="True" x:Name="mainWindow">
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="Margin" Value="2 0"/>
@@ -51,26 +51,34 @@
         <Label Grid.Row="4" Content="-ВОЗДЕРЖАЛИСЬ-" Background="Yellow" />
         <TextBox Grid.Row="5" x:Name="tb_VoteAbstained" Background="Yellow"  Text="0" PreviewTextInput="InputOnlyDigits" IsTabStop="True" GotFocus="Vote_GotFocus" />
         <!--Кнопки-->
-        <Button Grid.Row="6" Margin="2 2" Click="SendResults_Click" x:Name="bt_SendResult"  Content="ЕДИНОГЛАСНО!" IsDefault="True" MinHeight="50" Style="{DynamicResource MaterialDesignRaisedButton}"/>
-        <Button Grid.Row="7" Margin="2 2" Content="{materialDesign:PackIcon Kind=Refresh, Size=25}" Click="Reset_Click" IsCancel="True" Style="{DynamicResource MaterialDesignRaisedLightButton}"/>
+        <Button
+            Grid.Row="6" Margin="2 2" 
+            Click="SendResults_Click" x:Name="bt_SendResult"  
+            Content="ЕДИНОГЛАСНО!" 
+            IsDefault="True" MinHeight="60" 
+            Style="{DynamicResource MaterialDesignRaisedButton}"/>
+        <Button 
+            Grid.Row="7" Margin="2 2" 
+            ToolTip="Сброс"
+            Content="{materialDesign:PackIcon Kind=DeleteSweep, Size=30}" 
+            MinHeight="40" Click="Reset_Click" IsCancel="True" 
+            Style="{DynamicResource MaterialDesignRaisedLightButton}"/>
         <!--Скриншот второго окна-->
-        <Image Grid.Row="8" x:Name="bottom_image"  Stretch="Fill" />
-
-        <StackPanel.ContextMenu>
-            <ContextMenu>
-                <MenuItem Header="Полный экран" Name="menuItemFullScreenChecked" Checked="MenuItem_FullScreen_Checked" Unchecked="MenuItem_FullScreen_Unchecked" IsCheckable="True"></MenuItem>
-                <MenuItem Header="Подлолжка" >
-                    <MenuItem Header="Номер заседания" HorizontalContentAlignment="Center">
-                        <Grid>
-                            <TextBox Height="40" Width="40" Margin="0" BorderThickness="0" x:Name="tb_SessionNumber" Text="0" PreviewTextInput="InputOnlyDigits" FontSize="20"/>
-                        </Grid>   
-                    </MenuItem>
-                    <MenuItem Header="Показать подложку" IsCheckable="True" Checked="MenuItemSubstrateWindow_Checked" Unchecked="MenuItemSubstrateWindow_Unchecked"/>
-                </MenuItem>
-                <MenuItem Header="Сброс настроек" Click="MenuItem_Reset_Click"/>
-                
-                <MenuItem Header="Выход" Click="MenuItem_Exit_Click"/>
-            </ContextMenu>
-        </StackPanel.ContextMenu>
+        <Image Grid.Row="8" x:Name="bottom_image"  Stretch="Fill" VerticalAlignment="Center" HorizontalAlignment="Center" />
     </StackPanel>
+    
+    <Window.ContextMenu>
+        <ContextMenu>
+            <MenuItem Header="Полный экран" Name="menuItemFullScreenChecked" Checked="MenuItem_FullScreen_Checked" Unchecked="MenuItem_FullScreen_Unchecked" IsCheckable="True"/>
+            <MenuItem Icon="{materialDesign:PackIcon Kind=LayersPlus}" Header="Подлолжка">
+                <MenuItem Icon="{materialDesign:PackIcon Kind=Vote}" Header="Номер заседания" HorizontalContentAlignment="Center">
+                    <TextBox Margin="0" BorderThickness="0" x:Name="tb_SessionNumber" Text="0" PreviewTextInput="InputOnlyDigits" FontSize="20"/>
+                </MenuItem>
+                <MenuItem Header="Показать подложку" IsCheckable="True" Checked="MenuItemSubstrateWindow_Checked" Unchecked="MenuItemSubstrateWindow_Unchecked"/>
+            </MenuItem>
+            <MenuItem Icon="{materialDesign:PackIcon Kind=Resize}" Header="Сброс настроек" Click="MenuItem_Reset_Click"/>
+
+            <MenuItem Icon="{materialDesign:PackIcon Kind=Close}" Header="Выход" Click="MenuItem_Exit_Click"/>
+        </ContextMenu>
+    </Window.ContextMenu>
 </Window>

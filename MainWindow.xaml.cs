@@ -34,6 +34,7 @@ namespace DumaVoteCounter {
             //колесико мыши в полях ПРОТИВ и ВОЗДЕРЖАЛИСЬ
             tb_VoteAgainst.MouseWheel += VotesScroll;
             tb_VoteAbstained.MouseWheel += VotesScroll;
+            tb_SessionNumber.MouseWheel += VotesScroll;
 
         }
 
@@ -100,6 +101,7 @@ namespace DumaVoteCounter {
 
             bt_SendResult.IsEnabled = !voting.SomeThingWrong; //отключаем кнопку отсылки результата если неправильно заполненны поля
             bt_SendResult.Content = voting.Edinoglasno ? "ЕДИНОГЛАСНО!" : "ОТПРАВИТЬ"; //меняем название кнопки в зависимости от результатов
+            //bt_SendResult.Content = {materialDesign: PackIcon Kind = DeleteSweep, Size = 30};
 
         }
 
@@ -212,6 +214,7 @@ namespace DumaVoteCounter {
         private void VotesScroll(object sender, MouseWheelEventArgs e) {
             string sender_name = (sender as TextBox).Name;
 
+
             foreach (UIElement c in mainStackPanel.Children) {
                 if (c is TextBox && ((TextBox)c).Name == sender_name) {
                     _ = Int32.TryParse(tb_VoteFor.Text, out int voteFor);
@@ -222,7 +225,15 @@ namespace DumaVoteCounter {
 
                     ((TextBox)c).Text = votes.ToString();
                 }
-                
+            }
+            //меняем колесиком номер заседания
+            if (sender_name == "tb_SessionNumber") {
+                _ = Int32.TryParse(tb_SessionNumber.Text, out int session);
+
+                if (e.Delta > 0) session++;
+                if (e.Delta < 0) session--;
+
+                tb_SessionNumber.Text = session.ToString();
             }
         }
 
