@@ -41,7 +41,7 @@
     </Window.Resources>
     <StackPanel x:Name="mainStackPanel">
         <!--За-->
-        <Label x:Name="lb_VoteFor" Grid.Row="0" Content="ПРИСУТСТВУЕТ" Background="LightGray" />
+        <Label x:Name="lb_VoteFor" Grid.Row="0" Content="ПРИСУТСТВУЕТ" Background="LightGray"/>
         <TextBox Grid.Row="1" Background="LightGray" x:Name="tb_VoteFor" Text="49" PreviewTextInput="InputOnlyDigits"/>
         
         <!--Против-->

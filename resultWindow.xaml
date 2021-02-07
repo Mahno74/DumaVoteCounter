@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:DumaVoteCounter"
         mc:Ignorable="d"
         Height="200" Width="200" Closing="Result_Window_Closing" WindowStyle="None" 
-        ResizeMode="CanResizeWithGrip" AllowsTransparency="True" MouseLeftButtonDown="Dragging" Topmost="True" 
+        ResizeMode="CanResizeWithGrip" MouseLeftButtonDown="Dragging" Topmost="True" 
         BorderBrush="White" BorderThickness="3" Loaded="Window_Loaded" MouseWheel="Window_MouseWheel">
     <Grid >
         <Grid.RowDefinitions>
@@ -28,21 +28,23 @@
             </Viewbox>
         </Border>
         <!--Результаты голосования-->
+        <!--ЗА-->
         <Border Grid.Row="1" Background="LightGreen" x:Name="container_lb_voteFor" Visibility="Visible">
             <Viewbox  Stretch="Uniform" >
                 <Label  FontWeight="Bold" x:Name="lb_voteFor"/>
             </Viewbox>
         </Border>
+        <!--ПРОТИВ-->
         <Border Grid.Row="2" Background="Red" x:Name="container_lb_voteAgainst" Visibility="Visible">
             <Viewbox  Stretch="Uniform" >
                 <Label  FontWeight="Bold" x:Name="lb_voteAgainst" />
             </Viewbox>
         </Border>
+        <!--ВОЗДЕРЖАЛИСЬ-->
         <Border Grid.Row="3" Background="Yellow" x:Name="container_lb_voteAbstained" Visibility="Visible">
             <Viewbox  Stretch="Uniform" >
                 <Label  FontWeight="Bold" x:Name="lb_voteAbstained" />
             </Viewbox>
         </Border>
-
     </Grid>
 </Window>

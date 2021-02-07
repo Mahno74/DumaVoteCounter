@@ -7,20 +7,18 @@
         mc:Ignorable="d"
         Height="200" Width="200"  WindowStyle="None" 
         ResizeMode="CanResizeWithGrip" 
-        BorderBrush="White" BorderThickness="3" Loaded="Window_Loaded">
+        Loaded="Window_Loaded">
     <Grid >
         <Grid.RowDefinitions>
-            <RowDefinition Height="1.5*"/>
+            <RowDefinition/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <!--Решение принято-->
-        <Border Grid.Row="0" Background="LightGray" x:Name="container_lb_accepted">
+        <Border Grid.Row="0" Background="LightGray" >
             <Viewbox  Stretch="Fill" >
                 <Label x:Name="lb_SessionNumber" Content="Заседание № 10" FontWeight="Bold"/>
             </Viewbox>
         </Border>
-        <!--Единогласно-->
-        <Border Grid.Row="1" Background="LightGreen" Grid.RowSpan="3" x:Name="container_lb_edinoglano">
+        <Border Grid.Row="1" Background="LightGreen">
             <Viewbox  Stretch="Uniform" >
                 <Label x:Name="lb_DateNow" Content="10.12.2021" FontWeight="Bold"/>
             </Viewbox>

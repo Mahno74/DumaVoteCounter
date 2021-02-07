@@ -11,7 +11,7 @@ namespace DumaVoteCounter {
     /// </summary>
     public partial class MainWindow : Window {
         Voting voting;
-        public static bool fullscreen_resultWindow;
+        //public static bool fullscreen_resultWindow;
         ResultWindow resultWindow;
         SubstrateWindow subWindow;
         public MainWindow() {
@@ -180,13 +180,13 @@ namespace DumaVoteCounter {
         }
 
         private void MenuItem_FullScreen_Checked(object sender, RoutedEventArgs e) {
-            fullscreen_resultWindow = true;
+            Settings.fullscreen_resultWindow = true;
             if (resultWindow != null) {
                 resultWindow.WindowState = WindowState.Maximized;
             }
         }
         private void MenuItem_FullScreen_Unchecked(object sender, RoutedEventArgs e) {
-            fullscreen_resultWindow = false;
+            Settings.fullscreen_resultWindow = false;
             if (resultWindow != null) {
                 resultWindow.WindowState = WindowState.Normal;
             }

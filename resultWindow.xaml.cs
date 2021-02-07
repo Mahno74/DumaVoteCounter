@@ -50,7 +50,8 @@ namespace DumaVoteCounter {
 
         private void Result_Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             //не сохраняем размеры доп экрана если выбран полнооконный режим
-            if (!MainWindow.fullscreen_resultWindow) {
+            if (!Settings.fullscreen_resultWindow) {
+                //если был выбран полноэкранных режим то не сохраняем размены окна
                 Properties.Settings.Default.resultWindowWidth = Width;
                 Properties.Settings.Default.resultWindowHeight = Height;
             }
@@ -62,14 +63,10 @@ namespace DumaVoteCounter {
 
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             //вспоминаем был ли выбран полный или не полный экран при последнем запуске окна
-            if (MainWindow.fullscreen_resultWindow) {
-                this.WindowState = WindowState.Maximized;
-            } else {
-                this.WindowState = WindowState.Normal;
-            }
+            WindowState = Settings.fullscreen_resultWindow ? WindowState.Maximized : WindowState.Normal;
         }
 
-        //регклировка размеров колесиком
+        //регулировка размера окна колесиком мыши
         private void Window_MouseWheel(object sender, MouseWheelEventArgs e) {
             if (e.Delta > 0) {
                 Width += 25;
