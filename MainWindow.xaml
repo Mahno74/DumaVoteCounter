@@ -5,7 +5,15 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:DumaVoteCounter"
         mc:Ignorable="d"
-        Title="Голосование" MinHeight="380" MinWidth="165" WindowStyle="None" MouseLeftButtonDown="Dragging" Closing="Window_Closing" Topmost="True" x:Name="mainWindow">
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+        TextElement.FontWeight="Regular"
+        TextElement.FontSize="12"
+        TextOptions.TextFormattingMode="Ideal"
+        TextOptions.TextRenderingMode="Auto"
+        Background="{DynamicResource MaterialDesignPaper}"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+     Title="Голосование" MinHeight="385" MinWidth="165" WindowStyle="None" MouseLeftButtonDown="Dragging" Closing="Window_Closing" Topmost="True" x:Name="mainWindow">
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="Margin" Value="2 0"/>
@@ -13,7 +21,6 @@
             <Setter Property="FontSize" Value="15"/>
             <Setter Property="FontFamily" Value="Times New Roman"/>
             <Setter Property="Height" Value="35"/>
-
             <Setter Property="BorderThickness" Value="1 1 1 0"/>
             <Setter Property="BorderBrush" Value="Black"/>
             <Setter Property="VerticalContentAlignment" Value="Center"/>
@@ -31,13 +38,6 @@
             <Setter Property="HorizontalContentAlignment" Value="Center"/>
             <Setter Property="IsTabStop" Value="False"/>
         </Style>
-        <Style TargetType="Button">
-            <Setter Property="Margin" Value="2 2" />
-            <Setter Property="FontWeight" Value="Bold"/>
-            <Setter Property="IsTabStop" Value="False"/>
-            <Setter Property="FontSize" Value="17"/>
-            <Setter Property="FontFamily" Value="Times New Roman"/>
-        </Style>
     </Window.Resources>
     <StackPanel x:Name="mainStackPanel">
         <!--За-->
@@ -51,8 +51,8 @@
         <Label Grid.Row="4" Content="-ВОЗДЕРЖАЛИСЬ-" Background="Yellow" />
         <TextBox Grid.Row="5" x:Name="tb_VoteAbstained" Background="Yellow"  Text="0" PreviewTextInput="InputOnlyDigits" IsTabStop="True" GotFocus="Vote_GotFocus" />
         <!--Кнопки-->
-        <Button Grid.Row="6" Click="SendResults_Click" x:Name="bt_SendResult" Content="ЕДИНОГЛАСНО!" IsDefault="True" MinHeight="50"/>
-        <Button Grid.Row="7" Content="СБРОС" Click="Reset_Click" IsCancel="True" Background="LightBlue" Foreground="Black"/>
+        <Button Grid.Row="6" Margin="2 2" Click="SendResults_Click" x:Name="bt_SendResult" Content="ЕДИНОГЛАСНО!" IsDefault="True" MinHeight="50" Style="{DynamicResource MaterialDesignRaisedButton}"/>
+        <Button Grid.Row="7" Margin="2 2" Content="СБРОС" Click="Reset_Click" IsCancel="True" Style="{DynamicResource MaterialDesignRaisedLightButton}"/>
         <!--Скриншот второго окна-->
         <Image Grid.Row="8" x:Name="bottom_image"  Stretch="Fill" />
 
