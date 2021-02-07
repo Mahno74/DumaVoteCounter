@@ -1,0 +1,29 @@
+﻿<Window x:Class="DumaVoteCounter.SubstrateWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:DumaVoteCounter"
+        mc:Ignorable="d"
+        Height="200" Width="200"  WindowStyle="None" 
+        ResizeMode="CanResizeWithGrip" 
+        BorderBrush="White" BorderThickness="3" Loaded="Window_Loaded">
+    <Grid >
+        <Grid.RowDefinitions>
+            <RowDefinition Height="1.5*"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <!--Решение принято-->
+        <Border Grid.Row="0" Background="LightGray" x:Name="container_lb_accepted">
+            <Viewbox  Stretch="Fill" >
+                <Label x:Name="lb_SessionNumber" Content="Заседание № 10" FontWeight="Bold"/>
+            </Viewbox>
+        </Border>
+        <!--Единогласно-->
+        <Border Grid.Row="1" Background="LightGreen" Grid.RowSpan="3" x:Name="container_lb_edinoglano">
+            <Viewbox  Stretch="Uniform" >
+                <Label x:Name="lb_DateNow" Content="10.12.2021" FontWeight="Bold"/>
+            </Viewbox>
+        </Border>
+    </Grid>
+</Window>

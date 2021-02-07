@@ -59,7 +59,16 @@
         <StackPanel.ContextMenu>
             <ContextMenu>
                 <MenuItem Header="Полный экран" Name="menuItemFullScreenChecked" Checked="MenuItem_FullScreen_Checked" Unchecked="MenuItem_FullScreen_Unchecked" IsCheckable="True"></MenuItem>
+                <MenuItem Header="Подлолжка" >
+                    <MenuItem Header="Номер заседания" HorizontalContentAlignment="Center">
+                        <Grid>
+                            <TextBox Height="40" Width="40" Margin="0" BorderThickness="0" x:Name="tb_SessionNumber" Text="0" PreviewTextInput="InputOnlyDigits" FontSize="20"/>
+                        </Grid>   
+                    </MenuItem>
+                    <MenuItem Header="Показать подложку" IsCheckable="True" Checked="MenuItemSubstrateWindow_Checked" Unchecked="MenuItemSubstrateWindow_Unchecked"/>
+                </MenuItem>
                 <MenuItem Header="Сброс настроек" Click="MenuItem_Reset_Click"/>
+                
                 <MenuItem Header="Выход" Click="MenuItem_Exit_Click"/>
             </ContextMenu>
         </StackPanel.ContextMenu>

@@ -118,5 +118,17 @@ namespace DumaVoteCounter.Properties {
                 this["resultWindowWidth"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("0")]
+        public string sessionNumber {
+            get {
+                return ((string)(this["sessionNumber"]));
+            }
+            set {
+                this["sessionNumber"] = value;
+            }
+        }
     }
 }

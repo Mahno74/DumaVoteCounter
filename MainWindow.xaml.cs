@@ -13,6 +13,7 @@ namespace DumaVoteCounter {
         Voting voting;
         public static bool fullscreen_resultWindow;
         ResultWindow resultWindow;
+        SubstrateWindow subWindow;
         public MainWindow() {
             InitializeComponent();
             Left = Properties.Settings.Default.positionX;
@@ -20,7 +21,7 @@ namespace DumaVoteCounter {
             Width = Properties.Settings.Default.windowWidth;
             Height = Properties.Settings.Default.windowHeight;
             EventSubscriptions(); //подписываемся на события
-
+            tb_SessionNumber.Text = Properties.Settings.Default.sessionNumber;
             Reset_Click(null, null);
         }
 
@@ -29,6 +30,7 @@ namespace DumaVoteCounter {
             tb_VoteAgainst.TextChanged += VotesAgainsAbdstainetTextChange;
             tb_VoteAbstained.TextChanged += VotesAgainsAbdstainetTextChange;
             tb_VoteFor.TextChanged += VotesForTextChange;
+            tb_SessionNumber.TextChanged += SessionNumberTextChange;
             //колесико мыши в полях ПРОТИВ и ВОЗДЕРЖАЛИСЬ
             tb_VoteAgainst.MouseWheel += VotesScroll;
             tb_VoteAbstained.MouseWheel += VotesScroll;
@@ -42,6 +44,7 @@ namespace DumaVoteCounter {
             
             voting = new Voting();
             if (resultWindow != null) resultWindow.Close(); //закрваем второе окно если оно есть
+            resultWindow = null;
             bt_SendResult.IsEnabled = true; //активация кнопки послать результат и всех полей
             tb_VoteFor.IsEnabled = true;
             tb_VoteAgainst.IsEnabled = true;
@@ -53,7 +56,11 @@ namespace DumaVoteCounter {
             if (!Char.IsDigit(e.Text, 0)) e.Handled = true;
         }
 
+        private void SessionNumberTextChange(object sender, TextChangedEventArgs e) {
+            Properties.Settings.Default.sessionNumber = tb_SessionNumber.Text;
+            //Properties.Settings.Default.Save();
 
+        }
         //изменение текст бокса с общим числом депутатов
         private void VotesForTextChange(object sender, TextChangedEventArgs e) {
 
@@ -97,6 +104,10 @@ namespace DumaVoteCounter {
         }
 
         private void SendResults_Click(object sender, RoutedEventArgs e) {
+            //if (true && substrateWindow == null) {
+            //    SubstrateWindow substrateWindow = new SubstrateWindow();
+            //    substrateWindow.Show();
+            //}
             resultWindow = new ResultWindow(voting);
             resultWindow.Show();
             ScreenShot(true);
@@ -110,10 +121,12 @@ namespace DumaVoteCounter {
         private void Dragging(object sender, MouseButtonEventArgs e) => this.DragMove();
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             if (resultWindow != null) resultWindow.Close();
+            if (subWindow != null) subWindow.Close();
             Properties.Settings.Default.positionX = Left;
             Properties.Settings.Default.positionY = Top;
             Properties.Settings.Default.windowWidth = Width;
             Properties.Settings.Default.windowHeight = Height;
+            Properties.Settings.Default.sessionNumber = tb_SessionNumber.Text;
             Properties.Settings.Default.Save();
         }
 
@@ -171,8 +184,6 @@ namespace DumaVoteCounter {
             if (resultWindow != null) {
                 resultWindow.WindowState = WindowState.Maximized;
             }
-            //mainStackPanel.Orientation = Orientation.Horizontal;
-            //mainStackPanel.VerticalAlignment = VerticalAlignment.Center;
         }
         private void MenuItem_FullScreen_Unchecked(object sender, RoutedEventArgs e) {
             fullscreen_resultWindow = false;
@@ -181,12 +192,24 @@ namespace DumaVoteCounter {
             }
 
         }
+        private void MenuItemSubstrateWindow_Checked(object sender, RoutedEventArgs e) {
+            if (subWindow == null) {
+                subWindow = new SubstrateWindow();
+                subWindow.Show();
+            }
+        }
+
+        private void MenuItemSubstrateWindow_Unchecked(object sender, RoutedEventArgs e) {
+            if (subWindow != null) {
+                subWindow.Close();
+                subWindow = null;
+            }
+        }
         #endregion
 
 
         //Меняем количесво голосов с помощью колеса мыши
         private void VotesScroll(object sender, MouseWheelEventArgs e) {
-
             string sender_name = (sender as TextBox).Name;
 
             foreach (UIElement c in mainStackPanel.Children) {
@@ -202,5 +225,7 @@ namespace DumaVoteCounter {
                 
             }
         }
+
+
     }
 }
