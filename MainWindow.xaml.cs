@@ -32,7 +32,9 @@ namespace DumaVoteCounter {
             tb_VoteFor.TextChanged += VotesForTextChange;
             tb_SessionNumber.TextChanged += SessionNumberTextChange;
             //колесико мыши в полях ПРОТИВ и ВОЗДЕРЖАЛИСЬ
+            lb_VoteAgainst.MouseWheel += VotesScroll;
             tb_VoteAgainst.MouseWheel += VotesScroll;
+            lb_VoteAbstained.MouseWheel += VotesScroll;
             tb_VoteAbstained.MouseWheel += VotesScroll;
             tb_SessionNumber.MouseWheel += VotesScroll;
 
@@ -212,31 +214,49 @@ namespace DumaVoteCounter {
 
         //Меняем количесво голосов с помощью колеса мыши
         private void VotesScroll(object sender, MouseWheelEventArgs e) {
-            string sender_name = (sender as TextBox).Name;
+            string sender_name = (sender as Control).Name;
 
+            //меняем колесиком ПРОТИВ
+            if (sender_name == lb_VoteAgainst.Name || sender_name == tb_VoteAgainst.Name) {
+                _ = Int32.TryParse(tb_VoteFor.Text, out int voteFor);
+                _ = Int32.TryParse(tb_VoteAgainst.Text, out int votes);
 
-            foreach (UIElement c in mainStackPanel.Children) {
-                if (c is TextBox && ((TextBox)c).Name == sender_name) {
-                    _ = Int32.TryParse(tb_VoteFor.Text, out int voteFor);
-                    _ = Int32.TryParse(((TextBox)c).Text, out int votes);
+                if (e.Delta > 0 && voteFor > 0) votes++;
+                if (e.Delta < 0 && votes > 0) votes--;
 
-                    if (e.Delta > 0 && voteFor > 0) votes++;
-                    if (e.Delta < 0 && votes > 0) votes--;
-
-                    ((TextBox)c).Text = votes.ToString();
-                }
+                tb_VoteAgainst.Text = votes.ToString();
             }
+
+            //меняем колесиком ВОЗДЕРЖАЛИСЬ
+            if (sender_name == lb_VoteAbstained.Name || sender_name == tb_VoteAbstained.Name) {
+                _ = Int32.TryParse(tb_VoteFor.Text, out int voteFor);
+                _ = Int32.TryParse(tb_VoteAbstained.Text, out int votes);
+
+                if (e.Delta > 0 && voteFor > 0) votes++;
+                if (e.Delta < 0 && votes > 0) votes--;
+
+                tb_VoteAbstained.Text = votes.ToString();
+            }
+
             //меняем колесиком номер заседания
-            if (sender_name == "tb_SessionNumber") {
+            if (sender_name == tb_SessionNumber.Name) {
                 _ = Int32.TryParse(tb_SessionNumber.Text, out int session);
 
                 if (e.Delta > 0) session++;
-                if (e.Delta < 0) session--;
+                if (e.Delta < 0 && session >1) session--;
 
                 tb_SessionNumber.Text = session.ToString();
             }
         }
 
-
+        private void ChangeOrientation(object sender, RoutedEventArgs e) {
+            if (!mi_Change_Orientation.IsChecked) return;
+            mainStackPanel.Orientation = Orientation.Horizontal;
+            mainWindow.MinHeight = 150; mainWindow.MinWidth = 500;
+            lb_VoteFor.BorderThickness = new Thickness(1, 1, 0, 1);
+            lb_VoteFor.Margin = new Thickness(0, 2, 0, 2);
+            tb_VoteFor.Margin = new Thickness(0, 2, 0, 2);
+            tb_VoteFor.BorderThickness = new Thickness(0, 1, 1, 1);
+        }
     }
 }
