@@ -13,7 +13,7 @@
         TextOptions.TextRenderingMode="Auto"
         Background="{DynamicResource MaterialDesignPaper}"
         FontFamily="{DynamicResource MaterialDesignFont}"
-     Title="Голосование" MinHeight="405" MinWidth="165" WindowStyle="None" MouseLeftButtonDown="Dragging" Closing="Window_Closing" Topmost="True" x:Name="mainWindow">
+     Title="Голосование" MinHeight="440" MinWidth="165" WindowStyle="None" MouseLeftButtonDown="Dragging" Closing="Window_Closing" Topmost="True" x:Name="mainWindow">
     <Window.Resources>
         <Style TargetType="Label">
             <Setter Property="Margin" Value="2 0"/>
@@ -40,6 +40,13 @@
         </Style>
     </Window.Resources>
     <StackPanel x:Name="mainStackPanel">
+        <!--HIDE/SHOW-->
+        <Button
+            Margin="2 2 0 8" 
+            Click="Hide_Click" x:Name="bt_Hide"  
+            Content="HIDE" 
+            IsDefault="True" MaxHeight="25" 
+            Style="{DynamicResource MaterialDesignFloatingActionButton}"/>
         <!--За-->
         <Label x:Name="lb_VoteFor" Grid.Row="0" Content="ПРИСУТСТВУЕТ" Background="LightGray"/>
         <TextBox Background="LightGray" x:Name="tb_VoteFor" Text="49" PreviewTextInput="InputOnlyDigits"/>

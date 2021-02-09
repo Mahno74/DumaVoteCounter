@@ -39,6 +39,24 @@ namespace DumaVoteCounter {
             tb_SessionNumber.MouseWheel += VotesScroll;
 
         }
+        //Прячем и прказываем основное окно
+        private void Hide_Click(object sender, RoutedEventArgs e) {
+            
+            if (Settings.hide) {
+                bt_Hide.Content = "HIDE";
+                MaxHeight = double.PositiveInfinity; MinHeight = Settings.minHeight;
+                Height = Properties.Settings.Default.windowHeight;
+
+            } else {
+                Settings.minHeight = MinHeight;
+                bt_Hide.Content = "SHOW";
+                Properties.Settings.Default.windowHeight = Height;
+                MinHeight = bt_Hide.Height - bt_Hide.Margin.Bottom;
+                MaxHeight = bt_Hide.Height - bt_Hide.Margin.Bottom;
+                Height = bt_Hide.Height - bt_Hide.Margin.Bottom;
+            }
+            Settings.hide = !Settings.hide;
+        }
 
         private void Reset_Click(object sender, RoutedEventArgs e) {
             tb_VoteFor.Text = Settings.peopleNumber.ToString();
@@ -258,5 +276,7 @@ namespace DumaVoteCounter {
             tb_VoteFor.Margin = new Thickness(0, 2, 0, 2);
             tb_VoteFor.BorderThickness = new Thickness(0, 1, 1, 1);
         }
+
+
     }
 }

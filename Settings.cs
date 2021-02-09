@@ -6,5 +6,7 @@ namespace DumaVoteCounter {
     public static class Settings {
         public static int peopleNumber = 49;
         public static bool fullscreen_resultWindow;
+        public static bool hide = false;
+        public static double minHeight;
     }
 }
