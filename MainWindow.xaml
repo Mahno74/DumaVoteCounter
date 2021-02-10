@@ -39,13 +39,13 @@
             <Setter Property="IsTabStop" Value="False"/>
         </Style>
     </Window.Resources>
+    
     <StackPanel x:Name="mainStackPanel">
         <!--HIDE/SHOW-->
         <Button
             Margin="2 2 0 8" 
             Click="Hide_Click" x:Name="bt_Hide"  
-            Content="HIDE" 
-            IsDefault="True" MaxHeight="25" 
+            Content="{materialDesign:PackIcon Kind=ArrowUpCircle}" MaxHeight="25"
             Style="{DynamicResource MaterialDesignFloatingActionButton}"/>
         <!--За-->
         <Label x:Name="lb_VoteFor" Grid.Row="0" Content="ПРИСУТСТВУЕТ" Background="LightGray"/>
@@ -82,9 +82,8 @@
                 </MenuItem>
                 <MenuItem Header="Показать подложку" IsCheckable="True" Checked="MenuItemSubstrateWindow_Checked" Unchecked="MenuItemSubstrateWindow_Unchecked"/>
             </MenuItem>
-            <MenuItem Icon="{materialDesign:PackIcon Kind=Resize}" Header="Сброс настроек" Click="MenuItem_Reset_Click"/>
-            <MenuItem x:Name="mi_Change_Orientation" Header="Горизонтальная ориентация" Click="ChangeOrientation" IsCheckable="True"/>
-
+            <MenuItem Icon="{materialDesign:PackIcon Kind=Autorenew}" Header="Сброс настроек" Click="MenuItem_Reset_Click"/>
+            <MenuItem Icon="{materialDesign:PackIcon Kind=InformationOutline}" Header="О программе" Click="About_Click"/>
             <MenuItem Icon="{materialDesign:PackIcon Kind=Close}" Header="Выход" Click="MenuItem_Exit_Click"/>
         </ContextMenu>
     </Window.ContextMenu>

@@ -43,13 +43,13 @@ namespace DumaVoteCounter {
         private void Hide_Click(object sender, RoutedEventArgs e) {
             
             if (Settings.hide) {
-                bt_Hide.Content = "HIDE";
+                bt_Hide.Content = new MaterialDesignThemes.Wpf.PackIcon { Kind = MaterialDesignThemes.Wpf.PackIconKind.ArrowUpCircle };
                 MaxHeight = double.PositiveInfinity; MinHeight = Settings.minHeight;
                 Height = Properties.Settings.Default.windowHeight;
 
             } else {
                 Settings.minHeight = MinHeight;
-                bt_Hide.Content = "SHOW";
+                bt_Hide.Content = new MaterialDesignThemes.Wpf.PackIcon { Kind = MaterialDesignThemes.Wpf.PackIconKind.ArrowDownCircle };
                 Properties.Settings.Default.windowHeight = Height;
                 MinHeight = bt_Hide.Height - bt_Hide.Margin.Bottom;
                 MaxHeight = bt_Hide.Height - bt_Hide.Margin.Bottom;
@@ -267,16 +267,9 @@ namespace DumaVoteCounter {
             }
         }
 
-        private void ChangeOrientation(object sender, RoutedEventArgs e) {
-            if (!mi_Change_Orientation.IsChecked) return;
-            mainStackPanel.Orientation = Orientation.Horizontal;
-            mainWindow.MinHeight = 150; mainWindow.MinWidth = 500;
-            lb_VoteFor.BorderThickness = new Thickness(1, 1, 0, 1);
-            lb_VoteFor.Margin = new Thickness(0, 2, 0, 2);
-            tb_VoteFor.Margin = new Thickness(0, 2, 0, 2);
-            tb_VoteFor.BorderThickness = new Thickness(0, 1, 1, 1);
+        private void About_Click(object sender, RoutedEventArgs e) {
+            aboutWindow aw = new aboutWindow();
+            aw.ShowDialog();
         }
-
-
     }
 }

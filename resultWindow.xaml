@@ -18,11 +18,11 @@
         <!--Решение принято-->
         <Border Grid.Row="0" Background="LightGray" x:Name="container_lb_accepted">
             <Viewbox  Stretch="Fill" >
-                <Label x:Name="lb_accepted" Content="РЕШЕНИЕ ПРИНЯТО" FontWeight="Bold"/>
+                <Label x:Name="lb_accepted" Content="РЕШЕНИЕ ПРИНЯТО" FontWeight="Bold" BorderThickness="0"/>
             </Viewbox>
         </Border>
         <!--Единогласно-->
-        <Border Grid.Row="1" Background="LightGreen" Grid.RowSpan="3" x:Name="container_lb_edinoglano" Visibility="Collapsed">
+        <Border Grid.Row="1" Background="LightGreen" Grid.RowSpan="3" x:Name="container_lb_edinoglano" Visibility="Collapsed" BorderThickness="0">
             <Viewbox  Stretch="Uniform" >
                 <Label x:Name="lb_edinoglasno" Content="ЕДИНОГЛАСНО" FontWeight="Bold"/>
             </Viewbox>
