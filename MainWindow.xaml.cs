@@ -21,6 +21,7 @@ namespace DumaVoteCounter {
             Width = Properties.Settings.Default.windowWidth;
             Height = Properties.Settings.Default.windowHeight;
             menuItemFullScreenChecked.IsChecked = Properties.Settings.Default.fullScreen;
+            menuItemFullShowTotal.IsChecked = Properties.Settings.Default.showTotal;
             EventSubscriptions(); //подписываемся на события
             tb_SessionNumber.Text = Properties.Settings.Default.sessionNumber;
             Reset_Click(null, null);
@@ -204,6 +205,20 @@ namespace DumaVoteCounter {
             else Application.Current.Shutdown();
         }
 
+
+
+        //private void menuItemFullScreenChecked_Click(object sender, RoutedEventArgs e) {
+        //    Settings.fullscreen_resultWindow = menuItemFullScreenChecked.IsChecked;
+        //    if (Settings.fullscreen_resultWindow) {
+        //        if (resultWindow != null) {
+        //            resultWindow.WindowState = WindowState.Maximized;
+        //        }
+        //    } else {
+        //        if (resultWindow != null) {
+        //            resultWindow.WindowState = WindowState.Normal;
+        //        }
+        //    }
+        //}
         private void MenuItem_FullScreen_Checked(object sender, RoutedEventArgs e) {
             Settings.fullscreen_resultWindow = true;
             if (resultWindow != null) {
@@ -229,6 +244,9 @@ namespace DumaVoteCounter {
                 subWindow.Close();
                 subWindow = null;
             }
+        }
+        private void MenuItemFullShowTotal_Click(object sender, RoutedEventArgs e) {
+            Properties.Settings.Default.showTotal = menuItemFullShowTotal.IsChecked;
         }
         #endregion
 
@@ -274,5 +292,7 @@ namespace DumaVoteCounter {
             aboutWindow aw = new aboutWindow();
             aw.ShowDialog();
         }
+
+
     }
 }

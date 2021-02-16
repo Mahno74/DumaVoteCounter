@@ -74,7 +74,10 @@
     
     <Window.ContextMenu>
         <ContextMenu>
-            <MenuItem Header="Полный экран" Name="menuItemFullScreenChecked" Checked="MenuItem_FullScreen_Checked" Unchecked="MenuItem_FullScreen_Unchecked" IsCheckable="True"/>
+            <MenuItem Icon="{materialDesign:PackIcon Kind=Settings}" Header="Настройки">
+                <MenuItem Header="Полный экран" Name="menuItemFullScreenChecked" Checked="MenuItem_FullScreen_Checked" Unchecked="MenuItem_FullScreen_Unchecked" IsCheckable="True"/>
+                <MenuItem Header="Показывать кол. присутствующих" Name="menuItemFullShowTotal" IsCheckable="True" Click="MenuItemFullShowTotal_Click"/>
+            </MenuItem>
             <MenuItem Icon="{materialDesign:PackIcon Kind=LayersPlus}" Header="Подлолжка">
                 <MenuItem Icon="{materialDesign:PackIcon Kind=Vote}" Header="Номер заседания">
                     <TextBox x:Name="tb_SessionNumber" Margin="0 6" BorderThickness="0" PreviewTextInput="InputOnlyDigits" FontSize="20"/>

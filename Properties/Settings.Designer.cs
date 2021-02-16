@@ -142,5 +142,17 @@ namespace DumaVoteCounter.Properties {
                 this["fullScreen"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool showTotal {
+            get {
+                return ((bool)(this["showTotal"]));
+            }
+            set {
+                this["showTotal"] = value;
+            }
+        }
     }
 }

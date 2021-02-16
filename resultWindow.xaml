@@ -14,7 +14,7 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
-            <RowDefinition Height="0.5*"/>
+            <RowDefinition x:Name="rowTotal" Height="0.5*"/>
         </Grid.RowDefinitions>
         <!--Решение принято-->
         <Border Grid.Row="0" Background="LightGray" x:Name="container_lb_accepted">

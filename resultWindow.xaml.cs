@@ -16,7 +16,10 @@ namespace DumaVoteCounter {
             } else {
                 Result_NOT_Edinoglasno(voting);
             }
+            //показывать или не показывать общее количество присутвующих депутатов
+            rowTotal.Height = Properties.Settings.Default.showTotal ? new GridLength(0.5, GridUnitType.Star) : new GridLength(0, GridUnitType.Star);
             lb_total.Content = $"Присутвует депутатов - {Settings.peopleNumber}";
+
         }
 
         private void Result_Edinoglasno() {
