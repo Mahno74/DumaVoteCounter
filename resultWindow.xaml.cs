@@ -1,4 +1,5 @@
-﻿using System.Windows;
+﻿using System;
+using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
 
@@ -18,8 +19,8 @@ namespace DumaVoteCounter {
             }
             //показывать или не показывать общее количество присутвующих депутатов
             rowTotal.Height = Properties.Settings.Default.showTotal ? new GridLength(0.5, GridUnitType.Star) : new GridLength(0, GridUnitType.Star);
-            lb_total.Content = $"Присутвует депутатов - {Settings.peopleNumber}";
-
+            //double percent = (Settings.peopleNumber * 100) / Settings.MaxNumberOfDeputies; //Считаем процент присутствия
+            lb_total.Content = $"Присутвует депутатов - {Settings.peopleNumber}  ({voting.PercentOfAttendance})";
         }
 
         private void Result_Edinoglasno() {
