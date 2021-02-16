@@ -101,11 +101,10 @@ namespace DumaVoteCounter {
             _ = Int32.TryParse(tb_VoteAgainst.Text, out int voteAgainst);
             _ = Int32.TryParse(tb_VoteAbstained.Text, out int voteAbstained);
 
-
-            voting = new Voting(voteAgainst, voteAbstained);
+            voting = new Voting(voteAgainst, voteAbstained); //создаем объект голосование
 
             if (voting.Edinoglasno) {
-                Settings.peopleNumber = voting.voteFor; 
+                Settings.peopleNumber = voting.VoteFor; 
                 tb_VoteFor.IsReadOnly = false;
                 tb_VoteFor.Background = Brushes.LightGray;
                 lb_VoteFor.Background = Brushes.LightGray;
@@ -117,9 +116,7 @@ namespace DumaVoteCounter {
                 lb_VoteFor.Background = Brushes.Green;
 
             }
-
-            tb_VoteFor.Text = voting.voteFor.ToString();
-
+            tb_VoteFor.Text = voting.VoteFor.ToString(); //получаем и публикуем расчитанное поле ЗА
 
             bt_SendResult.IsEnabled = !voting.SomeThingWrong; //отключаем кнопку отсылки результата если неправильно заполненны поля
             bt_SendResult.Content = voting.Edinoglasno ? "ЕДИНОГЛАСНО!" : "ОТПРАВИТЬ"; //меняем название кнопки в зависимости от результатов
@@ -128,10 +125,6 @@ namespace DumaVoteCounter {
         }
 
         private void SendResults_Click(object sender, RoutedEventArgs e) {
-            //if (true && substrateWindow == null) {
-            //    SubstrateWindow substrateWindow = new SubstrateWindow();
-            //    substrateWindow.Show();
-            //}
             resultWindow = new ResultWindow(voting);
             resultWindow.Show();
             ScreenShot(true);
@@ -155,11 +148,13 @@ namespace DumaVoteCounter {
             Properties.Settings.Default.Save();
         }
 
+        //выбираем весь тескт в поле ПРОТИВ или ВОЗДЕРЖАЛИСЬ при работе с клавиатуры
         private void Vote_GotFocus(object sender, RoutedEventArgs e) {
             TextBox text = sender as TextBox;
             text.SelectAll();
         }
 
+        //показываем или не показываем скриншот с итогами голосования
         private void ScreenShot(bool show) {
             switch (show) {
                 case true:
@@ -205,8 +200,6 @@ namespace DumaVoteCounter {
             else Application.Current.Shutdown();
         }
 
-
-
         //private void menuItemFullScreenChecked_Click(object sender, RoutedEventArgs e) {
         //    Settings.fullscreen_resultWindow = menuItemFullScreenChecked.IsChecked;
         //    if (Settings.fullscreen_resultWindow) {
@@ -248,10 +241,16 @@ namespace DumaVoteCounter {
         private void MenuItemFullShowTotal_Click(object sender, RoutedEventArgs e) {
             Properties.Settings.Default.showTotal = menuItemFullShowTotal.IsChecked;
         }
+
+        private void About_Click(object sender, RoutedEventArgs e) {
+            aboutWindow aw = new aboutWindow();
+            aw.ShowDialog();
+        }
         #endregion
 
 
-        //Меняем количесво голосов с помощью колеса мыши
+        #region Работа с колесом мыши
+        //Меняем количество голосов с помощью колеса мыши
         private void VotesScroll(object sender, MouseWheelEventArgs e) {
             string sender_name = (sender as Control).Name;
 
@@ -282,16 +281,16 @@ namespace DumaVoteCounter {
                 _ = Int32.TryParse(tb_SessionNumber.Text, out int session);
 
                 if (e.Delta > 0) session++;
-                if (e.Delta < 0 && session >1) session--;
+                if (e.Delta < 0 && session > 1) session--;
 
                 tb_SessionNumber.Text = session.ToString();
             }
         }
+        #endregion
 
-        private void About_Click(object sender, RoutedEventArgs e) {
-            aboutWindow aw = new aboutWindow();
-            aw.ShowDialog();
-        }
+
+
+
 
 
     }

@@ -75,7 +75,7 @@
     <Window.ContextMenu>
         <ContextMenu>
             <MenuItem Icon="{materialDesign:PackIcon Kind=Settings}" Header="Настройки">
-                <MenuItem Header="Полный экран" Name="menuItemFullScreenChecked" Checked="MenuItem_FullScreen_Checked" Unchecked="MenuItem_FullScreen_Unchecked" IsCheckable="True"/>
+                <MenuItem Header="Результаты в полный экран" Name="menuItemFullScreenChecked" Checked="MenuItem_FullScreen_Checked" Unchecked="MenuItem_FullScreen_Unchecked" IsCheckable="True"/>
                 <MenuItem Header="Показывать кол. присутствующих" Name="menuItemFullShowTotal" IsCheckable="True" Click="MenuItemFullShowTotal_Click"/>
             </MenuItem>
             <MenuItem Icon="{materialDesign:PackIcon Kind=LayersPlus}" Header="Подлолжка">

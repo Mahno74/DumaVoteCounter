@@ -46,7 +46,7 @@ namespace DumaVoteCounter {
             container_lb_voteFor.Visibility = Visibility.Visible;
             container_lb_voteAgainst.Visibility = Visibility.Visible;
             container_lb_voteAbstained.Visibility = Visibility.Visible;
-            lb_voteFor.Content = $"ЗА - {voting.voteFor}";
+            lb_voteFor.Content = $"ЗА - {voting.VoteFor}";
             lb_voteAgainst.Content = $"ПРОТИВ - {voting.voteAgainst}";
             lb_voteAbstained.Content = $"ВОЗДЕРЖАЛИСЬ - {voting.voteAbstained}";
         }

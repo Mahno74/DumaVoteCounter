@@ -14,11 +14,11 @@ namespace DumaVoteCounter {
         //Проверка на ЕДИНОГЛАСНО
         public bool Edinoglasno => (voteAgainst == 0 && voteAbstained == 0);
 
-        public int voteFor => (Settings.peopleNumber - voteAgainst - voteAbstained);
+        public int VoteFor => (Settings.peopleNumber - voteAgainst - voteAbstained);
         //проверка на корректность данных (недопустим отрицательный результат)
-        public bool SomeThingWrong => voteFor < 0;
+        public bool SomeThingWrong => VoteFor < 0;
 
-        public bool Accepted => (voteAgainst < voteFor);
+        public bool Accepted => (voteAgainst < VoteFor);
 
     }
 }
