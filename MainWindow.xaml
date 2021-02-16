@@ -19,7 +19,7 @@
             <Setter Property="Margin" Value="2 0"/>
             <Setter Property="FontWeight" Value="Bold"/>
             <Setter Property="FontSize" Value="15"/>
-            <Setter Property="FontFamily" Value="Times New Roman"/>
+            <Setter Property="FontFamily" Value="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"/>
             <Setter Property="Height" Value="35"/>
             <Setter Property="BorderThickness" Value="1 1 1 0"/>
             <Setter Property="BorderBrush" Value="Black"/>
@@ -50,7 +50,6 @@
         <!--За-->
         <Label x:Name="lb_VoteFor" Grid.Row="0" Content="ПРИСУТСТВУЕТ" Background="LightGray"/>
         <TextBox Background="LightGray" x:Name="tb_VoteFor" Text="49" PreviewTextInput="InputOnlyDigits"/>
-        
         <!--Против-->
         <Label x:Name="lb_VoteAgainst" Content="-ПРОТИВ-" Background="Red" />
         <TextBox x:Name="tb_VoteAgainst" Background="Red"  Text="0" PreviewTextInput="InputOnlyDigits" IsTabStop="True" GotFocus="Vote_GotFocus" />
@@ -77,8 +76,8 @@
         <ContextMenu>
             <MenuItem Header="Полный экран" Name="menuItemFullScreenChecked" Checked="MenuItem_FullScreen_Checked" Unchecked="MenuItem_FullScreen_Unchecked" IsCheckable="True"/>
             <MenuItem Icon="{materialDesign:PackIcon Kind=LayersPlus}" Header="Подлолжка">
-                <MenuItem Icon="{materialDesign:PackIcon Kind=Vote}" Header="Номер заседания" HorizontalContentAlignment="Center">
-                    <TextBox Margin="0" BorderThickness="0" x:Name="tb_SessionNumber" Text="0" PreviewTextInput="InputOnlyDigits" FontSize="20"/>
+                <MenuItem Icon="{materialDesign:PackIcon Kind=Vote}" Header="Номер заседания">
+                    <TextBox x:Name="tb_SessionNumber" Margin="0 6" BorderThickness="0" PreviewTextInput="InputOnlyDigits" FontSize="20"/>
                 </MenuItem>
                 <MenuItem Header="Показать подложку" IsCheckable="True" Checked="MenuItemSubstrateWindow_Checked" Unchecked="MenuItemSubstrateWindow_Unchecked"/>
             </MenuItem>

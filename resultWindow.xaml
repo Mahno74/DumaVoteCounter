@@ -14,6 +14,7 @@
             <RowDefinition/>
             <RowDefinition/>
             <RowDefinition/>
+            <RowDefinition Height="0.5*"/>
         </Grid.RowDefinitions>
         <!--Решение принято-->
         <Border Grid.Row="0" Background="LightGray" x:Name="container_lb_accepted">
@@ -44,6 +45,12 @@
         <Border Grid.Row="3" Background="Yellow" x:Name="container_lb_voteAbstained" Visibility="Visible">
             <Viewbox  Stretch="Uniform" >
                 <Label  FontWeight="Bold" x:Name="lb_voteAbstained" />
+            </Viewbox>
+        </Border>
+        <!--ВОЗДЕРЖАЛИСЬ-->
+        <Border Grid.Row="4" Background="LightGray" x:Name="container_lb_total" Visibility="Visible">
+            <Viewbox  Stretch="Uniform" >
+                <Label  FontWeight="Bold" x:Name="lb_total" />
             </Viewbox>
         </Border>
     </Grid>

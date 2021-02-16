@@ -16,7 +16,7 @@ namespace DumaVoteCounter {
             } else {
                 Result_NOT_Edinoglasno(voting);
             }
-            
+            lb_total.Content = $"Присутвует депутатов - {Settings.peopleNumber}";
         }
 
         private void Result_Edinoglasno() {

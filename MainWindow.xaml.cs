@@ -20,6 +20,7 @@ namespace DumaVoteCounter {
             Top = Properties.Settings.Default.positionY;
             Width = Properties.Settings.Default.windowWidth;
             Height = Properties.Settings.Default.windowHeight;
+            menuItemFullScreenChecked.IsChecked = Properties.Settings.Default.fullScreen;
             EventSubscriptions(); //подписываемся на события
             tb_SessionNumber.Text = Properties.Settings.Default.sessionNumber;
             Reset_Click(null, null);
@@ -149,6 +150,7 @@ namespace DumaVoteCounter {
             Properties.Settings.Default.windowWidth = Width;
             Properties.Settings.Default.windowHeight = Height;
             Properties.Settings.Default.sessionNumber = tb_SessionNumber.Text;
+            Properties.Settings.Default.fullScreen = menuItemFullScreenChecked.IsChecked;
             Properties.Settings.Default.Save();
         }
 
@@ -177,6 +179,7 @@ namespace DumaVoteCounter {
             Properties.Settings.Default.resultPositionY = 0;
             Properties.Settings.Default.resultWindowWidth = 200;
             Properties.Settings.Default.resultWindowHeight = 200;
+            menuItemFullScreenChecked.IsChecked = false;
             mainWindow.Left = 0;
             mainWindow.Top = 0;
             mainWindow.Width = MinWidth;
