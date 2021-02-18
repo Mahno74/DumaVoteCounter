@@ -32,6 +32,8 @@ namespace DumaVoteCounter {
             lb_accepted.Content = "РЕШЕНИЕ ПРИНЯТО";
         }
 
+
+
         private void Result_NOT_Edinoglasno(Voting voting) {
             if (voting.Accepted) {
                 container_lb_accepted.Background = Brushes.LightGray;

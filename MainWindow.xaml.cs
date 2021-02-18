@@ -39,6 +39,9 @@ namespace DumaVoteCounter {
             lb_VoteAbstained.MouseWheel += VotesScroll;
             tb_VoteAbstained.MouseWheel += VotesScroll;
             tb_SessionNumber.MouseWheel += VotesScroll;
+            //Кнопки плюс - минус на общем количествк депутатов на заседании
+            lb_Minus.MouseDown += MinusPlus_MouseDown;
+            lb_Plus.MouseDown += MinusPlus_MouseDown;
 
         }
         //Прячем и прказываем основное окно
@@ -60,20 +63,7 @@ namespace DumaVoteCounter {
             Settings.hide = !Settings.hide;
         }
 
-        private void Reset_Click(object sender, RoutedEventArgs e) {
-            tb_VoteFor.Text = Settings.peopleNumber.ToString();
-            tb_VoteAgainst.Text = "0";
-            tb_VoteAbstained.Text = "0";
-            
-            voting = new Voting();
-            if (resultWindow != null) resultWindow.Close(); //закрваем второе окно если оно есть
-            resultWindow = null;
-            bt_SendResult.IsEnabled = true; //активация кнопки послать результат и всех полей
-            tb_VoteFor.IsEnabled = true;
-            tb_VoteAgainst.IsEnabled = true;
-            tb_VoteAbstained.IsEnabled = true;
-            ScreenShot(false); //убираем скриншот
-        }
+
 
         private void InputOnlyDigits(object sender, TextCompositionEventArgs e) {
             if (!Char.IsDigit(e.Text, 0)) e.Handled = true;
@@ -108,13 +98,22 @@ namespace DumaVoteCounter {
                 tb_VoteFor.IsReadOnly = false;
                 tb_VoteFor.Background = Brushes.LightGray;
                 lb_VoteFor.Background = Brushes.LightGray;
+                lb_Minus.Background = Brushes.LightGray;
+                lb_Plus.Background = Brushes.LightGray;
                 lb_VoteFor.Content = "ПРИСУТСТВУЕТ";
+                lb_Plus.IsEnabled  = true;
+                lb_Minus.IsEnabled = true;
             } else {
                 tb_VoteFor.IsReadOnly = true;
                 lb_VoteFor.Content = "-ЗА-";
                 tb_VoteFor.Background = Brushes.Green;
                 lb_VoteFor.Background = Brushes.Green;
-
+                lb_Minus.Background = Brushes.Green;
+                lb_Plus.Background = Brushes.Green;
+                lb_Plus.IsEnabled = false;
+                lb_Minus.IsEnabled = false;
+                lb_Minus.Opacity = 0.6;
+                lb_Plus.Opacity = 0.6;
             }
             tb_VoteFor.Text = voting.VoteFor.ToString(); //получаем и публикуем расчитанное поле ЗА
 
@@ -124,17 +123,58 @@ namespace DumaVoteCounter {
 
         }
 
+        //Изменение количества присутвующих щелчками мыши
+        private void MinusPlus_MouseDown(object sender, MouseButtonEventArgs e) {
+            _ = Int32.TryParse(tb_VoteFor.Text, out int isPresent);
+            string sender_name = (sender as Control).Name;
+            switch (sender_name) {
+                case "lb_Minus":
+                    if (isPresent > 0)
+                        tb_VoteFor.Text = (--isPresent).ToString();
+                    break;
+                case "lb_Plus":
+                    if (isPresent < Settings.MaxNumberOfDeputies)
+                        tb_VoteFor.Text = (++isPresent).ToString();
+                    break;
+                default:
+                    break;
+            }
+        }
+
         private void SendResults_Click(object sender, RoutedEventArgs e) {
             resultWindow = new ResultWindow(voting);
             resultWindow.Show();
             ScreenShot(true);
             mainWindow.Focus(); //возвращаем фокус на главное окно для отработки хоткеев
+            //деактивируем елементы управления
             bt_SendResult.IsEnabled = false;
             tb_VoteFor.IsEnabled = false;
             tb_VoteAgainst.IsEnabled = false;
             tb_VoteAbstained.IsEnabled = false;
+            lb_Minus.IsEnabled = false;
+            lb_Plus.IsEnabled = false;
+            lb_Minus.Opacity = 0.6;
+            lb_Plus.Opacity = 0.6;
         }
-
+        private void Reset_Click(object sender, RoutedEventArgs e) {
+            tb_VoteFor.Text = Settings.peopleNumber.ToString();
+            tb_VoteAgainst.Text = "0";
+            tb_VoteAbstained.Text = "0";
+            voting = new Voting();
+            if (resultWindow != null) resultWindow.Close(); //закрваем второе окно если оно есть
+            resultWindow = null;
+            ScreenShot(false); //убираем скриншот
+            //Активируем элементы управления
+            bt_SendResult.IsEnabled = true; //активация кнопки послать результат и всех полей
+            tb_VoteFor.IsEnabled = true;
+            tb_VoteAgainst.IsEnabled = true;
+            tb_VoteAbstained.IsEnabled = true;
+            lb_Minus.IsEnabled = true;
+            lb_Plus.IsEnabled = true;
+            lb_Minus.Opacity = 1;
+            lb_Plus.Opacity = 1;
+        }
+        
         private void Dragging(object sender, MouseButtonEventArgs e) => this.DragMove();
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
             if (resultWindow != null) resultWindow.Close();
@@ -287,11 +327,6 @@ namespace DumaVoteCounter {
             }
         }
         #endregion
-
-
-
-
-
 
     }
 }

@@ -48,8 +48,20 @@
             Content="{materialDesign:PackIcon Kind=ArrowUpCircle}" MaxHeight="25"
             Style="{DynamicResource MaterialDesignFloatingActionButton}"/>
         <!--За-->
-        <Label x:Name="lb_VoteFor" Grid.Row="0" Content="ПРИСУТСТВУЕТ" Background="LightGray"/>
-        <TextBox Background="LightGray" x:Name="tb_VoteFor" Text="49" PreviewTextInput="InputOnlyDigits"/>
+        <Label x:Name="lb_VoteFor" Content="ПРИСУТСТВУЕТ" Background="LightGray"/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.3*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.3*"/>
+            </Grid.ColumnDefinitions>
+            <Label Grid.Column="0" x:Name="lb_Minus" Background="LightGray" Margin="2 0 0 4" BorderThickness="1 0 0 1"  
+                   Content="{materialDesign:PackIcon Kind=AccountMinus, Size=20}"  Height="{Binding ElementName=tb_VoteFor, Path=Width}"/>
+            <TextBox Grid.Column="1" Background="LightGray" Margin="0 0 0 4" BorderThickness="0 0 0 1" x:Name="tb_VoteFor" Text="49" PreviewTextInput="InputOnlyDigits"/>
+            <Label Grid.Column="2" x:Name="lb_Plus" Background="LightGray" Margin="0 0 2 4" BorderThickness="0 0 1 1"  
+                   Content="{materialDesign:PackIcon Kind=AccountPlus, Size=20}" Height="{Binding ElementName=tb_VoteFor, Path=Width}"/>
+        </Grid>
+
         <!--Против-->
         <Label x:Name="lb_VoteAgainst" Content="-ПРОТИВ-" Background="Red" />
         <TextBox x:Name="tb_VoteAgainst" Background="Red"  Text="0" PreviewTextInput="InputOnlyDigits" IsTabStop="True" GotFocus="Vote_GotFocus" />
