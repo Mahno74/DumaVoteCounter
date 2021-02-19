@@ -112,8 +112,6 @@ namespace DumaVoteCounter {
                 lb_Plus.Background = Brushes.Green;
                 lb_Plus.IsEnabled = false;
                 lb_Minus.IsEnabled = false;
-                lb_Minus.Opacity = 0.6;
-                lb_Plus.Opacity = 0.6;
             }
             tb_VoteFor.Text = voting.VoteFor.ToString(); //получаем и публикуем расчитанное поле ЗА
 
