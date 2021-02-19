@@ -40,8 +40,8 @@ namespace DumaVoteCounter {
             tb_VoteAbstained.MouseWheel += VotesScroll;
             tb_SessionNumber.MouseWheel += VotesScroll;
             //Кнопки плюс - минус на общем количествк депутатов на заседании
-            lb_Minus.MouseDown += MinusPlus_MouseDown;
-            lb_Plus.MouseDown += MinusPlus_MouseDown;
+            lb_Minus.MouseDown += Add_Substract_Deputies_Click;
+            lb_Plus.MouseDown += Add_Substract_Deputies_Click;
 
         }
         //Прячем и прказываем основное окно
@@ -82,7 +82,7 @@ namespace DumaVoteCounter {
             _ = Int32.TryParse(tb_VoteAbstained.Text, out int voteAbstained);
 
             if (voteAgainst == 0 & voteAbstained == 0) {
-                Settings.peopleNumber = voteFor; 
+                Settings.peopleNumber = voteFor;
             } 
         }
         //изменение текст боксов с Против - Воздержались
@@ -117,12 +117,10 @@ namespace DumaVoteCounter {
 
             bt_SendResult.IsEnabled = !voting.SomeThingWrong; //отключаем кнопку отсылки результата если неправильно заполненны поля
             bt_SendResult.Content = voting.Edinoglasno ? "ЕДИНОГЛАСНО!" : "ОТПРАВИТЬ"; //меняем название кнопки в зависимости от результатов
-            //bt_SendResult.Content = {materialDesign: PackIcon Kind = DeleteSweep, Size = 30};
-
         }
 
         //Изменение количества присутвующих щелчками мыши
-        private void MinusPlus_MouseDown(object sender, MouseButtonEventArgs e) {
+        private void Add_Substract_Deputies_Click(object sender, MouseButtonEventArgs e) {
             _ = Int32.TryParse(tb_VoteFor.Text, out int isPresent);
             string sender_name = (sender as Control).Name;
             switch (sender_name) {
@@ -163,7 +161,7 @@ namespace DumaVoteCounter {
             resultWindow = null;
             ScreenShot(false); //убираем скриншот
             //Активируем элементы управления
-            bt_SendResult.IsEnabled = true; //активация кнопки послать результат и всех полей
+            bt_SendResult.IsEnabled = true;
             tb_VoteFor.IsEnabled = true;
             tb_VoteAgainst.IsEnabled = true;
             tb_VoteAbstained.IsEnabled = true;
@@ -281,7 +279,7 @@ namespace DumaVoteCounter {
         }
 
         private void About_Click(object sender, RoutedEventArgs e) {
-            aboutWindow aw = new aboutWindow();
+            AboutWindow aw = new AboutWindow();
             aw.ShowDialog();
         }
         #endregion

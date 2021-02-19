@@ -47,7 +47,7 @@
                 <Label  FontWeight="Bold" x:Name="lb_voteAbstained" />
             </Viewbox>
         </Border>
-        <!--ВОЗДЕРЖАЛИСЬ-->
+        <!--Всего присутвует на заседании-->
         <Border Grid.Row="4" Background="LightGray" x:Name="container_lb_total" Visibility="Visible">
             <Viewbox  Stretch="Uniform" >
                 <Label  FontWeight="Bold" x:Name="lb_total" />
