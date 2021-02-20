@@ -12,7 +12,7 @@
       <Value Profile="(Default)">400</Value>
     </Setting>
     <Setting Name="windowWidth" Type="System.Double" Scope="User">
-      <Value Profile="(Default)">200</Value>
+      <Value Profile="(Default)">165</Value>
     </Setting>
     <Setting Name="resultPositionX" Type="System.Double" Scope="User">
       <Value Profile="(Default)">205</Value>

@@ -14,6 +14,8 @@ namespace DumaVoteCounter {
         //public static bool fullscreen_resultWindow;
         ResultWindow resultWindow;
         SubstrateWindow subWindow;
+        KvorumWindow kvWindow;
+
         public MainWindow() {
             InitializeComponent();
             Left = Properties.Settings.Default.positionX;
@@ -44,9 +46,24 @@ namespace DumaVoteCounter {
             lb_Plus.MouseDown += Add_Substract_Deputies_Click;
 
         }
+        private void ShowKvorumWindow_Click(object sender, RoutedEventArgs e) {
+            kvWindow = new KvorumWindow(voting);
+            kvWindow.Show();
+            ScreenShot(Settings.ShowScreenShot.ShowKvorumWindow);
+            mainWindow.Focus(); //возвращаем фокус на главное окно для отработки хоткеев
+            //деактивируем елементы управления
+            bt_SendResult.IsEnabled = false;
+            tb_VoteFor.IsEnabled = false;
+            tb_VoteAgainst.IsEnabled = false;
+            tb_VoteAbstained.IsEnabled = false;
+            lb_Minus.IsEnabled = false;
+            lb_Plus.IsEnabled = false;
+            bt_ShowKvorumWindows.IsEnabled = false;
+            lb_Minus.Opacity = 0.6;
+            lb_Plus.Opacity = 0.6;
+        }
         //Прячем и прказываем основное окно
         private void Hide_Click(object sender, RoutedEventArgs e) {
-            
             if (Settings.hide) {
                 bt_Hide.Content = new MaterialDesignThemes.Wpf.PackIcon { Kind = MaterialDesignThemes.Wpf.PackIconKind.ArrowUpCircle };
                 MaxHeight = double.PositiveInfinity; MinHeight = Settings.minHeight;
@@ -140,7 +157,7 @@ namespace DumaVoteCounter {
         private void SendResults_Click(object sender, RoutedEventArgs e) {
             resultWindow = new ResultWindow(voting);
             resultWindow.Show();
-            ScreenShot(true);
+            ScreenShot(Settings.ShowScreenShot.ShowResultWindow);
             mainWindow.Focus(); //возвращаем фокус на главное окно для отработки хоткеев
             //деактивируем елементы управления
             bt_SendResult.IsEnabled = false;
@@ -149,6 +166,7 @@ namespace DumaVoteCounter {
             tb_VoteAbstained.IsEnabled = false;
             lb_Minus.IsEnabled = false;
             lb_Plus.IsEnabled = false;
+            bt_ShowKvorumWindows.IsEnabled = false;
             lb_Minus.Opacity = 0.6;
             lb_Plus.Opacity = 0.6;
         }
@@ -158,8 +176,9 @@ namespace DumaVoteCounter {
             tb_VoteAbstained.Text = "0";
             voting = new Voting();
             if (resultWindow != null) resultWindow.Close(); //закрваем второе окно если оно есть
-            resultWindow = null;
-            ScreenShot(false); //убираем скриншот
+            if (kvWindow != null) kvWindow.Close(); //закрваем второе окно если оно есть
+            resultWindow = null; kvWindow = null;
+            ScreenShot(Settings.ShowScreenShot.CloseAll); //убираем скриншот
             //Активируем элементы управления
             bt_SendResult.IsEnabled = true;
             tb_VoteFor.IsEnabled = true;
@@ -167,6 +186,7 @@ namespace DumaVoteCounter {
             tb_VoteAbstained.IsEnabled = true;
             lb_Minus.IsEnabled = true;
             lb_Plus.IsEnabled = true;
+            bt_ShowKvorumWindows.IsEnabled = true;
             lb_Minus.Opacity = 1;
             lb_Plus.Opacity = 1;
         }
@@ -191,15 +211,22 @@ namespace DumaVoteCounter {
         }
 
         //показываем или не показываем скриншот с итогами голосования
-        private void ScreenShot(bool show) {
-            switch (show) {
-                case true:
+        private void ScreenShot(Settings.ShowScreenShot todo) {
+            RenderTargetBitmap bmp;
+            switch (todo) {
+                case Settings.ShowScreenShot.ShowResultWindow:
                     if (resultWindow == null) return;
-                    RenderTargetBitmap bmp = new RenderTargetBitmap(Convert.ToInt32(resultWindow.Width), Convert.ToInt32(resultWindow.Height), 96, 96, PixelFormats.Pbgra32);
+                    bmp = new RenderTargetBitmap(Convert.ToInt32(resultWindow.Width), Convert.ToInt32(resultWindow.Height), 96, 96, PixelFormats.Pbgra32);
                     bmp.Render(resultWindow);
                     bottom_image.Source = bmp;
                     break;
-                case false:
+                case Settings.ShowScreenShot.ShowKvorumWindow:
+                    if (kvWindow == null) return;
+                    bmp = new RenderTargetBitmap(Convert.ToInt32(kvWindow.Width), Convert.ToInt32(kvWindow.Height), 96, 96, PixelFormats.Pbgra32);
+                    bmp.Render(kvWindow);
+                    bottom_image.Source = bmp;
+                    break;
+                case Settings.ShowScreenShot.CloseAll:
                     bottom_image.Source = null;
                     break;
             }
@@ -323,6 +350,7 @@ namespace DumaVoteCounter {
             }
         }
         #endregion
+
 
     }
 }

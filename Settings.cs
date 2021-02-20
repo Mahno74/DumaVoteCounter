@@ -9,5 +9,10 @@ namespace DumaVoteCounter {
         public static bool fullscreen_resultWindow;
         public static bool hide = false;
         public static double minHeight;
+        public enum ShowScreenShot {
+            ShowResultWindow,
+            ShowKvorumWindow,
+            CloseAll
+        }
     }
 }

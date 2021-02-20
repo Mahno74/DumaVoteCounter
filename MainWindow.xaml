@@ -42,11 +42,27 @@
     
     <StackPanel x:Name="mainStackPanel">
         <!--HIDE/SHOW-->
-        <Button
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="0.2*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
+            <Button Grid.Column="0"
             Margin="2 2 0 8" 
             Click="Hide_Click" x:Name="bt_Hide"  
-            Content="{materialDesign:PackIcon Kind=ArrowUpCircle}" MaxHeight="25"
+            ToolTip="Свернуть окно"
+            Content="{materialDesign:PackIcon Kind=ArrowUpCircle}" MaxHeight="25" MaxWidth="50"
             Style="{DynamicResource MaterialDesignFloatingActionButton}"/>
+            
+            <Button Grid.Column="2"
+            Margin="2 2 0 8" 
+            Click="ShowKvorumWindow_Click" x:Name="bt_ShowKvorumWindows"  
+            ToolTip="Вывести количесво присутвующих"
+            Content="{materialDesign:PackIcon Kind=AccountGroup}" MaxHeight="25" MaxWidth="50"
+            Style="{StaticResource MaterialDesignFloatingActionAccentButton}" />
+        </Grid>
+        
         <!--За-->
         <Label x:Name="lb_VoteFor" Content="ПРИСУТСТВУЕТ" Background="LightGray"/>
         <Grid>
@@ -81,7 +97,7 @@
             MinHeight="40" Click="Reset_Click" IsCancel="True" 
             Style="{DynamicResource MaterialDesignRaisedLightButton}"/>
         <!--Скриншот второго окна-->
-        <Image x:Name="bottom_image"  Stretch="Fill" VerticalAlignment="Center" HorizontalAlignment="Center" />
+        <Image x:Name="bottom_image" Margin="2 2" Stretch="Fill" HorizontalAlignment="Center"/>
     </StackPanel>
     
     <Window.ContextMenu>
