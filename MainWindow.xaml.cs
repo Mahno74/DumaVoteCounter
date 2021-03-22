@@ -11,7 +11,6 @@ namespace DumaVoteCounter {
     /// </summary>
     public partial class MainWindow : Window {
         Voting voting;
-        //public static bool fullscreen_resultWindow;
         ResultWindow resultWindow;
         SubstrateWindow subWindow;
         KvorumWindow kvWindow;
@@ -47,7 +46,7 @@ namespace DumaVoteCounter {
 
         }
         private void ShowKvorumWindow_Click(object sender, RoutedEventArgs e) {
-            kvWindow = new KvorumWindow(voting);
+            kvWindow = new KvorumWindow(voting) {Owner = this};
             kvWindow.Show();
             ScreenShot(Settings.ShowScreenShot.ShowKvorumWindow);
             mainWindow.Focus(); //возвращаем фокус на главное окно для отработки хоткеев
@@ -155,7 +154,7 @@ namespace DumaVoteCounter {
         }
 
         private void SendResults_Click(object sender, RoutedEventArgs e) {
-            resultWindow = new ResultWindow(voting);
+            resultWindow = new ResultWindow(voting) {Owner = this};
             resultWindow.Show();
             ScreenShot(Settings.ShowScreenShot.ShowResultWindow);
             mainWindow.Focus(); //возвращаем фокус на главное окно для отработки хоткеев
@@ -193,8 +192,9 @@ namespace DumaVoteCounter {
         
         private void Dragging(object sender, MouseButtonEventArgs e) => this.DragMove();
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e) {
-            if (resultWindow != null) resultWindow.Close();
-            if (subWindow != null) subWindow.Close();
+            //if (resultWindow != null) resultWindow.Close();
+            //if (subWindow != null) subWindow.Close();
+            //if (kvWindow != null) kvWindow.Close();
             Properties.Settings.Default.positionX = Left;
             Properties.Settings.Default.positionY = Top;
             Properties.Settings.Default.windowWidth = Width;
@@ -290,7 +290,7 @@ namespace DumaVoteCounter {
         }
         private void MenuItemSubstrateWindow_Checked(object sender, RoutedEventArgs e) {
             if (subWindow == null) {
-                subWindow = new SubstrateWindow();
+                subWindow = new SubstrateWindow {Owner = this};
                 subWindow.Show();
             }
         }
@@ -306,7 +306,7 @@ namespace DumaVoteCounter {
         }
 
         private void About_Click(object sender, RoutedEventArgs e) {
-            AboutWindow aw = new AboutWindow();
+            AboutWindow aw = new AboutWindow {Owner = this};
             aw.ShowDialog();
         }
         #endregion
