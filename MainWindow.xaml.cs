@@ -6,9 +6,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 
 namespace DumaVoteCounter {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window {
         Voting voting;
         ResultWindow resultWindow;
@@ -34,12 +32,13 @@ namespace DumaVoteCounter {
             tb_VoteAbstained.TextChanged += VotesAgainsAbdstainetTextChange;
             tb_VoteFor.TextChanged += VotesForTextChange;
             tb_SessionNumber.TextChanged += SessionNumberTextChange;
-            //колесико мыши в полях ПРОТИВ и ВОЗДЕРЖАЛИСЬ
+            //колесико мыши в полях
             lb_VoteAgainst.MouseWheel += VotesScroll;
             tb_VoteAgainst.MouseWheel += VotesScroll;
             lb_VoteAbstained.MouseWheel += VotesScroll;
             tb_VoteAbstained.MouseWheel += VotesScroll;
             tb_SessionNumber.MouseWheel += VotesScroll;
+            tb_MaxPeopleNumber.MouseWheel += VotesScroll;
             //Кнопки плюс - минус на общем количествк депутатов на заседании
             lb_Minus.MouseDown += Add_Substract_Deputies_Click;
             lb_Plus.MouseDown += Add_Substract_Deputies_Click;
@@ -78,17 +77,18 @@ namespace DumaVoteCounter {
             }
             Settings.hide = !Settings.hide;
         }
-
-
-
+        //Разрешение на введение только цифр
         private void InputOnlyDigits(object sender, TextCompositionEventArgs e) {
             if (!Char.IsDigit(e.Text, 0)) e.Handled = true;
         }
-
+        //событие изменнеия максимального количества присутвующих (для фракцие и т.п.)
+        private void tb_MaxPeopleNumber_TextChanged(object sender, TextChangedEventArgs e) {
+            Settings.MaxNumberOfDeputies = Int32.Parse(tb_MaxPeopleNumber.Text);
+            tb_VoteFor.Text = tb_MaxPeopleNumber.Text;
+        }
+        //изменения номер заседания (для подложки)
         private void SessionNumberTextChange(object sender, TextChangedEventArgs e) {
             Properties.Settings.Default.sessionNumber = tb_SessionNumber.Text;
-            //Properties.Settings.Default.Save();
-
         }
         //изменение текст бокса с общим числом депутатов
         private void VotesForTextChange(object sender, TextChangedEventArgs e) {
@@ -305,12 +305,12 @@ namespace DumaVoteCounter {
             Properties.Settings.Default.showTotal = menuItemFullShowTotal.IsChecked;
         }
 
+
         private void About_Click(object sender, RoutedEventArgs e) {
             AboutWindow aw = new AboutWindow {Owner = this};
             aw.ShowDialog();
         }
         #endregion
-
 
         #region Работа с колесом мыши
         //Меняем количество голосов с помощью колеса мыши
@@ -348,9 +348,16 @@ namespace DumaVoteCounter {
 
                 tb_SessionNumber.Text = session.ToString();
             }
+            //меняем колесиком максимальное количество присутвующих
+            if (sender_name == tb_MaxPeopleNumber.Name) {
+                _ = Int32.TryParse(tb_MaxPeopleNumber.Text, out int maxPeople);
+
+                if (e.Delta > 0) maxPeople++;
+                if (e.Delta < 0 && maxPeople > 1) maxPeople--;
+
+                tb_MaxPeopleNumber.Text = maxPeople.ToString();
+            }
         }
         #endregion
-
-
     }
 }

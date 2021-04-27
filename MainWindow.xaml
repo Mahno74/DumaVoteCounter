@@ -105,6 +105,10 @@
             <MenuItem Icon="{materialDesign:PackIcon Kind=Settings}" Header="Настройки">
                 <MenuItem Header="Результаты в полный экран" Name="menuItemFullScreenChecked" Checked="MenuItem_FullScreen_Checked" Unchecked="MenuItem_FullScreen_Unchecked" IsCheckable="True"/>
                 <MenuItem Header="Показывать кол. присутствующих" Name="menuItemFullShowTotal" IsCheckable="True" Click="MenuItemFullShowTotal_Click"/>
+                <MenuItem Icon="{materialDesign:PackIcon Kind=AccountSwitch}" Header="Максимальное количесво присутвующих">
+                    <TextBox x:Name="tb_MaxPeopleNumber" Margin="0 6" BorderThickness="0" PreviewTextInput="InputOnlyDigits" FontSize="20" Text="49" TextChanged="tb_MaxPeopleNumber_TextChanged" />
+                </MenuItem>
+                
             </MenuItem>
             <MenuItem Icon="{materialDesign:PackIcon Kind=LayersPlus}" Header="Подлолжка">
                 <MenuItem Icon="{materialDesign:PackIcon Kind=Vote}" Header="Номер заседания">
