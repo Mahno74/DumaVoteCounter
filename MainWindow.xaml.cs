@@ -116,7 +116,7 @@ namespace DumaVoteCounter {
                 lb_VoteFor.Background = Brushes.LightGray;
                 lb_Minus.Background = Brushes.LightGray;
                 lb_Plus.Background = Brushes.LightGray;
-                lb_VoteFor.Content = "ПРИСУТСТВУЕТ";
+                lb_VoteFor.Content = "ЗАРЕГИСТРИРОВАНО";
                 lb_Plus.IsEnabled  = true;
                 lb_Minus.IsEnabled = true;
             } else {

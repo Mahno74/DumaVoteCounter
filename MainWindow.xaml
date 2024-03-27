@@ -64,7 +64,7 @@
         </Grid>
         
         <!--За-->
-        <Label x:Name="lb_VoteFor" Content="ПРИСУТСТВУЕТ" Background="LightGray"/>
+        <Label x:Name="lb_VoteFor" Content="ЗАРЕГИСТРИРОВАНО" Background="LightGray"/>
         <Grid>
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.5*"/>

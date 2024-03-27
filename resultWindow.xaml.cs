@@ -19,7 +19,16 @@ namespace DumaVoteCounter {
             }
             //показывать или не показывать общее количество присутвующих депутатов
             rowTotal.Height = Properties.Settings.Default.showTotal ? new GridLength(0.5, GridUnitType.Star) : new GridLength(0, GridUnitType.Star);
-            lb_total.Content = $"Присутвует депутатов - {Settings.peopleNumber}  ({voting.PercentOfAttendance})";
+            lb_total.Content = $"Зарегистрировано депутатов - {Settings.peopleNumber}  ({voting.PercentOfAttendance})";
+        }
+        private void Window_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Key == Key.F11)
+            {
+                WindowStyle = WindowStyle.None;
+                WindowState = WindowState.Maximized;
+                ResizeMode = ResizeMode.NoResize;
+            }
         }
 
         private void Result_Edinoglasno() {
