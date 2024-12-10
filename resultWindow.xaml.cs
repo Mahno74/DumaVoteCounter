@@ -21,15 +21,6 @@ namespace DumaVoteCounter {
             rowTotal.Height = Properties.Settings.Default.showTotal ? new GridLength(0.5, GridUnitType.Star) : new GridLength(0, GridUnitType.Star);
             lb_total.Content = $"Зарегистрировано депутатов - {Settings.peopleNumber}  ({voting.PercentOfAttendance})";
         }
-        private void Window_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.Key == Key.F11)
-            {
-                WindowStyle = WindowStyle.None;
-                WindowState = WindowState.Maximized;
-                ResizeMode = ResizeMode.NoResize;
-            }
-        }
 
         private void Result_Edinoglasno() {
             container_lb_edinoglano.Visibility = Visibility.Visible;
@@ -39,9 +30,6 @@ namespace DumaVoteCounter {
             container_lb_accepted.Background = Brushes.LightGreen;
             lb_accepted.Content = "РЕШЕНИЕ ПРИНЯТО";
         }
-
-
-
         private void Result_NOT_Edinoglasno(Voting voting) {
             if (voting.Accepted) {
                 container_lb_accepted.Background = Brushes.LightGray;

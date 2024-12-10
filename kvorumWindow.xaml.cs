@@ -1,16 +1,13 @@
 ﻿using System;
 using System.Windows;
 
-
 namespace DumaVoteCounter {
     public partial class KvorumWindow : Window {
         Voting voting;
         private static KvorumWindow instanse;
 
         public static KvorumWindow GetInstance(Voting voting) {
-            if (instanse == null) {
-                instanse = new KvorumWindow(voting);
-            }
+            if (instanse == null) instanse = new KvorumWindow(voting);
             return instanse;
         }
 
@@ -23,7 +20,7 @@ namespace DumaVoteCounter {
             Width = Properties.Settings.Default.resultWindowWidth;
             Height = Properties.Settings.Default.resultWindowHeight;
         }
-
+        
         private void Window_Loaded(object sender, RoutedEventArgs e) {
             //WindowState = WindowState.Maximized;
             lb_TimeNow.Content = DateTime.Now.ToShortTimeString();
